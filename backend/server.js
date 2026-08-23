@@ -9,6 +9,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Render runs behind a reverse proxy.
+// Trust the first proxy so express-rate-limit
+// can correctly identify visitors by IP.
+app.set("trust proxy", 1);
 // ==========================================
 // MIDDLEWARE
 // ==========================================
@@ -25,8 +29,8 @@ app.use(
 // RATE LIMITING
 // ==========================================
 
-// Protect TEXTORA AI tools from excessive requests.
-// Each IP can make up to 30 AI requests every 15 minutes.
+// Protect TEXTORA API from excessive requests.
+// Each IP can make up to 30 requests every 15 minutes.
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -41,16 +45,8 @@ const apiLimiter = rateLimit({
   }
 });
 
-// Apply rate limiting only to AI endpoints.
-// Health check remains unrestricted.
-
-app.use("/api/paraphrase", apiLimiter);
-app.use("/api/humanize", apiLimiter);
-app.use("/api/grammar", apiLimiter);
-app.use("/api/essay", apiLimiter);
-app.use("/api/detect-ai", apiLimiter);
-app.use("/api/summarize", apiLimiter);
-app.use("/api/email", apiLimiter);
+// Apply protection only to API routes.
+app.use("/api/", apiLimiter);
 
 // ==========================================
 // GEMINI API
