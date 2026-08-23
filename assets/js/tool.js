@@ -1,7 +1,7 @@
 ```javascript
 // ==========================================
 // TEXTORA - TOOL.JS
-// Production Backend + Smart Loading
+// Syntax-safe production version
 // ==========================================
 
 const API_URL = "https://textora-backend-th7s.onrender.com";
@@ -22,9 +22,9 @@ const toolType = document.body.dataset.tool;
 // ==========================================
 
 if (input && count) {
-  input.addEventListener("input", () => {
+  input.addEventListener("input", function () {
     count.textContent =
-      `${input.value.length.toLocaleString()} characters`;
+      input.value.length.toLocaleString() + " characters";
   });
 }
 
@@ -33,27 +33,35 @@ if (input && count) {
 // ==========================================
 
 async function callAPI(endpoint, body) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
+  const response = await fetch(
+    API_URL + endpoint,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    }
+  );
 
   let data;
 
   try {
     data = await response.json();
-  } catch {
+  } catch (error) {
     throw new Error(
-      `Server returned an invalid response (${response.status}).`
+      "Server returned an invalid response (" +
+      response.status +
+      ")."
     );
   }
 
   if (!response.ok) {
     throw new Error(
-      data.error || `Request failed (${response.status}).`
+      data.error ||
+      "Request failed (" +
+      response.status +
+      ")."
     );
   }
 
@@ -89,9 +97,9 @@ function startSmartLoading() {
     }
   ];
 
-  const timers = messages.map(message => {
+  const timers = messages.map(function (message) {
 
-    return setTimeout(() => {
+    return setTimeout(function () {
 
       if (run && run.disabled && result) {
         result.textContent = message.text;
@@ -106,7 +114,7 @@ function startSmartLoading() {
 
 function stopSmartLoading(timers) {
 
-  timers.forEach(timer => {
+  timers.forEach(function (timer) {
     clearTimeout(timer);
   });
 
@@ -118,10 +126,13 @@ function stopSmartLoading(timers) {
 
 if (run) {
 
-  run.addEventListener("click", async () => {
+  run.addEventListener("click", async function () {
 
-    const text = input ? input.value.trim() : "";
-    const topicText = topic ? topic.value.trim() : "";
+    const text =
+      input ? input.value.trim() : "";
+
+    const topicText =
+      topic ? topic.value.trim() : "";
 
     // ========================================
     // VALIDATION
@@ -130,30 +141,24 @@ if (run) {
     if (toolType === "essay") {
 
       if (!topicText) {
-
         result.textContent =
           "Please enter an essay topic.";
-
         return;
       }
 
     } else if (toolType === "email") {
 
       if (!topicText) {
-
         result.textContent =
           "Please enter what the email is about.";
-
         return;
       }
 
     } else {
 
       if (!text) {
-
         result.textContent =
           "Please enter some text first.";
-
         return;
       }
     }
@@ -169,38 +174,31 @@ if (run) {
 
     if (toolType === "humanizer") {
 
-      run.textContent =
-        "Improving...";
+      run.textContent = "Improving...";
 
     } else if (toolType === "grammar") {
 
-      run.textContent =
-        "Checking...";
+      run.textContent = "Checking...";
 
     } else if (toolType === "essay") {
 
-      run.textContent =
-        "Creating...";
+      run.textContent = "Creating...";
 
     } else if (toolType === "summarizer") {
 
-      run.textContent =
-        "Summarizing...";
+      run.textContent = "Summarizing...";
 
     } else if (toolType === "detector") {
 
-      run.textContent =
-        "Analyzing...";
+      run.textContent = "Analyzing...";
 
     } else if (toolType === "email") {
 
-      run.textContent =
-        "Writing...";
+      run.textContent = "Writing...";
 
     } else {
 
-      run.textContent =
-        "Paraphrasing...";
+      run.textContent = "Paraphrasing...";
     }
 
     // ========================================
@@ -212,9 +210,9 @@ if (run) {
 
     try {
 
-      // ========================================
+      // ======================================
       // PARAPHRASER
-      // ========================================
+      // ======================================
 
       if (toolType === "paraphraser") {
 
@@ -235,9 +233,9 @@ if (run) {
         return;
       }
 
-      // ========================================
+      // ======================================
       // AI HUMANIZER
-      // ========================================
+      // ======================================
 
       if (toolType === "humanizer") {
 
@@ -258,9 +256,9 @@ if (run) {
         return;
       }
 
-      // ========================================
+      // ======================================
       // GRAMMAR CHECKER
-      // ========================================
+      // ======================================
 
       if (toolType === "grammar") {
 
@@ -278,9 +276,9 @@ if (run) {
         return;
       }
 
-      // ========================================
+      // ======================================
       // AI CONTENT DETECTOR
-      // ========================================
+      // ======================================
 
       if (toolType === "detector") {
 
@@ -296,25 +294,49 @@ if (run) {
             ? data.signals
             : [];
 
+        let detectorResult =
+          "Assessment: " +
+          (data.assessment || "Unknown") +
+          "\n\n";
+
+        detectorResult +=
+          "Confidence: " +
+          (data.confidence || "Unknown") +
+          "\n\n";
+
+        detectorResult +=
+          "Signals:\n";
+
+        if (signals.length) {
+
+          signals.forEach(function (signal) {
+
+            detectorResult +=
+              "- " +
+              signal +
+              "\n";
+
+          });
+
+        } else {
+
+          detectorResult +=
+            "- No signals returned.\n";
+        }
+
+        detectorResult +=
+          "\n" +
+          (data.note || "");
+
         result.textContent =
-          `Assessment: ${data.assessment || "Unknown"}\n\n` +
-          `Confidence: ${data.confidence || "Unknown"}\n\n` +
-          `Signals:\n` +
-          (
-            signals.length
-              ? signals
-                  .map(signal => `- ${signal}`)
-                  .join("\n")
-              : "- No signals returned."
-          ) +
-          `\n\n${data.note || ""}`;
+          detectorResult;
 
         return;
       }
 
-      // ========================================
+      // ======================================
       // TEXT SUMMARIZER
-      // ========================================
+      // ======================================
 
       if (toolType === "summarizer") {
 
@@ -332,29 +354,35 @@ if (run) {
         return;
       }
 
-      // ========================================
+      // ======================================
       // AI EMAIL WRITER
-      // ========================================
+      // ======================================
 
       if (toolType === "email") {
 
+        const emailTopicElement =
+          document.getElementById("topic");
+
+        const emailTypeElement =
+          document.getElementById("emailType");
+
+        const emailLengthElement =
+          document.getElementById("level");
+
         const emailTopic =
-          document
-            .getElementById("topic")
-            ?.value
-            .trim();
+          emailTopicElement
+            ? emailTopicElement.value.trim()
+            : "";
 
         const emailType =
-          document
-            .getElementById("emailType")
-            ?.value ||
-          "Professional";
+          emailTypeElement
+            ? emailTypeElement.value
+            : "Professional";
 
         const emailLength =
-          document
-            .getElementById("level")
-            ?.value ||
-          "Medium";
+          emailLengthElement
+            ? emailLengthElement.value
+            : "Medium";
 
         if (!emailTopic) {
 
@@ -381,9 +409,9 @@ if (run) {
         return;
       }
 
-      // ========================================
+      // ======================================
       // ESSAY WRITER
-      // ========================================
+      // ======================================
 
       if (toolType === "essay") {
 
@@ -417,9 +445,9 @@ if (run) {
         return;
       }
 
-      // ========================================
+      // ======================================
       // UNKNOWN TOOL
-      // ========================================
+      // ======================================
 
       result.textContent =
         "This TEXTORA tool is not connected yet.";
@@ -436,10 +464,6 @@ if (run) {
         error.message;
 
     } finally {
-
-      // ========================================
-      // STOP SMART LOADING
-      // ========================================
 
       stopSmartLoading(
         loadingTimers
@@ -462,7 +486,7 @@ if (copy) {
 
   copy.addEventListener(
     "click",
-    async () => {
+    async function () {
 
       try {
 
@@ -473,7 +497,7 @@ if (copy) {
         copy.textContent =
           "Copied!";
 
-        setTimeout(() => {
+        setTimeout(function () {
 
           copy.textContent =
             "Copy";
@@ -499,7 +523,7 @@ if (download) {
 
   download.addEventListener(
     "click",
-    () => {
+    function () {
 
       const text =
         result.innerText.trim();
@@ -523,14 +547,10 @@ if (download) {
         );
 
       const url =
-        URL.createObjectURL(
-          blob
-        );
+        URL.createObjectURL(blob);
 
       const a =
-        document.createElement(
-          "a"
-        );
+        document.createElement("a");
 
       a.href = url;
 
@@ -543,9 +563,7 @@ if (download) {
 
       a.remove();
 
-      URL.revokeObjectURL(
-        url
-      );
+      URL.revokeObjectURL(url);
     }
   );
 }
