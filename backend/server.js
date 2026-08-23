@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const rateLimit = require("express-rate-limit");
 const { GoogleGenAI } = require("@google/genai");
 
 dotenv.config();
@@ -8,8 +9,40 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ==========================================
+// MIDDLEWARE
+// ==========================================
+
 app.use(cors());
-app.use(express.json({ limit: "1mb" }));
+
+app.use(
+  express.json({
+    limit: "1mb"
+  })
+);
+
+// ==========================================
+// RATE LIMITING
+// ==========================================
+
+// Protect TEXTORA API from excessive requests.
+// Each IP can make up to 30 requests every 15 minutes.
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+
+  standardHeaders: true,
+  legacyHeaders: false,
+
+  message: {
+    error:
+      "Too many requests. Please wait a few minutes and try again."
+  }
+});
+
+// Apply protection only to API routes.
+app.use("/api/", apiLimiter);
 
 // ==========================================
 // GEMINI API
@@ -36,6 +69,7 @@ const MODELS = [
 // ==========================================
 
 async function generateText(prompt) {
+
   let lastError;
 
   for (const model of MODELS) {
@@ -48,19 +82,27 @@ async function generateText(prompt) {
           `🤖 Trying ${model} - attempt ${attempt}/3`
         );
 
-        const response = await ai.models.generateContent({
-          model: model,
-          contents: prompt
-        });
+        const response =
+          await ai.models.generateContent({
+            model: model,
+            contents: prompt
+          });
 
-        const text = response?.text || "";
+        const text =
+          response?.text || "";
 
         if (text.trim()) {
-          console.log(`✅ Gemini response from ${model}`);
+
+          console.log(
+            `✅ Gemini response from ${model}`
+          );
+
           return text;
         }
 
-        throw new Error("Gemini returned an empty response.");
+        throw new Error(
+          "Gemini returned an empty response."
+        );
 
       } catch (error) {
 
@@ -84,15 +126,14 @@ async function generateText(prompt) {
           status === 503 ||
           status === 504;
 
-        // For permanent errors, immediately try next model
         if (!temporaryError) {
           break;
         }
 
-        // Retry temporary errors
         if (attempt < 3) {
 
-          const waitTime = attempt * 3000;
+          const waitTime =
+            attempt * 3000;
 
           console.log(
             `⏳ Waiting ${waitTime / 1000}s before retry...`
@@ -106,13 +147,14 @@ async function generateText(prompt) {
     }
 
     console.log(
-      `➡️ Moving to next Gemini model...`
+      "➡️ Moving to next Gemini model..."
     );
   }
 
-  throw lastError || new Error(
-    "All Gemini models failed."
-  );
+  throw lastError ||
+    new Error(
+      "All Gemini models failed."
+    );
 }
 
 // ==========================================
@@ -171,10 +213,13 @@ Text:
 ${text}
 `;
 
-    const result = await generateText(prompt);
+    const result =
+      await generateText(prompt);
 
     res.json({
-      result: result || "No result was returned."
+      result:
+        result ||
+        "No result was returned."
     });
 
   } catch (error) {
@@ -235,10 +280,13 @@ Text:
 ${text}
 `;
 
-    const result = await generateText(prompt);
+    const result =
+      await generateText(prompt);
 
     res.json({
-      result: result || "No result was returned."
+      result:
+        result ||
+        "No result was returned."
     });
 
   } catch (error) {
@@ -298,10 +346,13 @@ Text:
 ${text}
 `;
 
-    const result = await generateText(prompt);
+    const result =
+      await generateText(prompt);
 
     res.json({
-      result: result || "No result was returned."
+      result:
+        result ||
+        "No result was returned."
     });
 
   } catch (error) {
@@ -338,7 +389,8 @@ app.post("/api/essay", async (req, res) => {
     if (!topic || !topic.trim()) {
 
       return res.status(400).json({
-        error: "Please enter an essay topic."
+        error:
+          "Please enter an essay topic."
       });
 
     }
@@ -370,10 +422,13 @@ Rules:
 - Return only the essay.
 `;
 
-    const result = await generateText(prompt);
+    const result =
+      await generateText(prompt);
 
     res.json({
-      result: result || "No essay was returned."
+      result:
+        result ||
+        "No essay was returned."
     });
 
   } catch (error) {
@@ -513,7 +568,8 @@ ${text}
 
     res.json({
       result:
-        result || "No summary was returned."
+        result ||
+        "No summary was returned."
     });
 
   } catch (error) {
@@ -594,7 +650,8 @@ Subject: [subject]
 
     res.json({
       result:
-        result || "No email was returned."
+        result ||
+        "No email was returned."
     });
 
   } catch (error) {
