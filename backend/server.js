@@ -11,21 +11,79 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
+// ==========================================
+// GEMINI API
+// ==========================================
+
 if (!process.env.GEMINI_API_KEY) {
-  console.error("❌ GEMINI_API_KEY is missing from .env");
+  console.error("❌ GEMINI_API_KEY is missing.");
   process.exit(1);
 }
 
 const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+  apiKey: process.env.GEMINI_API_KEY
 });
+
+// Use one model consistently
+const MODEL = "gemini-3.7-flash";
+
+// ==========================================
+// GEMINI HELPER WITH RETRY
+// ==========================================
+
+async function generateText(prompt) {
+  const maxAttempts = 3;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: MODEL,
+        contents: prompt
+      });
+
+      return response.text || "";
+    } catch (error) {
+      console.error(
+        `Gemini attempt ${attempt}/${maxAttempts} failed:`,
+        error.message || error
+      );
+
+      const status = error?.status || error?.code;
+
+      // Retry temporary errors
+      if (
+        (status === 429 || status === 500 || status === 502 || status === 503) &&
+        attempt < maxAttempts
+      ) {
+        await new Promise(resolve =>
+          setTimeout(resolve, attempt * 2000)
+        );
+
+        continue;
+      }
+
+      throw error;
+    }
+  }
+
+  throw new Error("Gemini request failed.");
+}
+
+// ==========================================
+// HEALTH CHECK
+// ==========================================
 
 app.get("/api/health", (req, res) => {
   res.json({
     ok: true,
     message: "TEXTORA backend is running",
+    model: MODEL
   });
 });
+
+// ==========================================
+// PARAPHRASER
+// ==========================================
 
 app.post("/api/paraphrase", async (req, res) => {
   try {
@@ -33,7 +91,7 @@ app.post("/api/paraphrase", async (req, res) => {
 
     if (!text || !text.trim()) {
       return res.status(400).json({
-        error: "Please enter some text.",
+        error: "Please enter some text."
       });
     }
 
@@ -46,33 +104,34 @@ Writing style: ${style}
 
 Rules:
 - Preserve the meaning and important facts.
-- Do not add facts that are not present.
-- Improve clarity, grammar, and natural flow.
+- Do not add facts.
+- Improve clarity and natural flow.
+- Keep the text readable.
 - Return only the paraphrased text.
-- Do not explain what you changed.
+- Do not explain your changes.
 
 Text:
 ${text}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
-      contents: prompt,
-    });
-
-    const result = response.text;
+    const result = await generateText(prompt);
 
     res.json({
-      result,
+      result: result || "No result was returned."
     });
+
   } catch (error) {
-    console.error("Gemini error:", error);
+    console.error("Paraphraser error:", error);
 
     res.status(500).json({
-      error: "TEXTORA could not process your request right now.",
+      error: "TEXTORA could not paraphrase the text right now."
     });
   }
 });
+
+// ==========================================
+// AI HUMANIZER
+// ==========================================
 
 app.post("/api/humanize", async (req, res) => {
   try {
@@ -80,22 +139,22 @@ app.post("/api/humanize", async (req, res) => {
 
     if (!text || !text.trim()) {
       return res.status(400).json({
-        error: "Please enter some text.",
+        error: "Please enter some text."
       });
     }
 
     const prompt = `
 You are TEXTORA, a professional writing assistant.
 
-Improve the following text so it sounds natural, clear, readable, and well-written.
+Improve the following text so it sounds natural, clear and readable.
 
 Writing style: ${style}
 
 Rules:
 - Preserve the original meaning.
 - Do not invent facts.
-- Improve sentence flow and readability.
-- Avoid unnecessary complexity.
+- Improve sentence flow.
+- Improve readability.
 - Keep the writing natural.
 - Return only the improved text.
 - Do not explain your changes.
@@ -104,71 +163,77 @@ Text:
 ${text}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt,
-    });
+    const result = await generateText(prompt);
 
     res.json({
-      result: response.text,
+      result: result || "No result was returned."
     });
+
   } catch (error) {
-    console.error("Gemini humanizer error:", error);
+    console.error("Humanizer error:", error);
 
     res.status(500).json({
-      error: "TEXTORA could not process your request right now.",
+      error: "TEXTORA could not improve the text right now."
     });
   }
 });
+
+// ==========================================
+// GRAMMAR CHECKER
+// ==========================================
+
 app.post("/api/grammar", async (req, res) => {
   try {
     const { text } = req.body;
 
     if (!text || !text.trim()) {
       return res.status(400).json({
-        error: "Please enter some text.",
+        error: "Please enter some text."
       });
     }
 
     const prompt = `
-You are TEXTORA, a professional grammar and writing assistant.
+You are TEXTORA, a professional grammar assistant.
 
-Check the following text for:
-- Grammar mistakes
-- Spelling mistakes
-- Punctuation mistakes
+Correct the following text.
+
+Check:
+- Grammar
+- Spelling
+- Punctuation
 - Sentence clarity
 - Awkward wording
 
 Rules:
 - Preserve the original meaning.
 - Do not invent facts.
-- Correct only genuine problems.
-- Make the writing clear and natural.
+- Correct genuine mistakes only.
 - Return only the corrected text.
 - Do not explain your changes.
-- Do not add unnecessary information.
 
 Text:
 ${text}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt,
-    });
+    const result = await generateText(prompt);
 
     res.json({
-      result: response.text,
+      result: result || "No result was returned."
     });
+
   } catch (error) {
-    console.error("Gemini grammar error:", error);
+    console.error("Grammar error:", error);
 
     res.status(500).json({
-      error: "TEXTORA could not check your grammar right now.",
+      error: "TEXTORA could not check the grammar right now."
     });
   }
 });
+
+// ==========================================
+// ESSAY WRITER
+// ==========================================
+
 app.post("/api/essay", async (req, res) => {
   try {
     const {
@@ -203,31 +268,33 @@ ${instructions || "None"}
 
 Rules:
 - Stay focused on the topic.
-- Create a clear introduction.
+- Write a clear introduction.
 - Develop logical body paragraphs.
-- Include a strong conclusion.
-- Use clear language appropriate for the requested level.
-- Do not invent facts or citations.
-- Return only the essay draft.
+- Include a conclusion.
+- Use language appropriate for the requested level.
+- Do not invent citations or facts.
+- Return only the essay.
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt
-    });
+    const result = await generateText(prompt);
 
     res.json({
-      result: response.text
+      result: result || "No essay was returned."
     });
 
   } catch (error) {
-    console.error("Gemini essay error:", error);
+    console.error("Essay error:", error);
 
     res.status(500).json({
       error: "TEXTORA could not create the essay right now."
     });
   }
 });
+
+// ==========================================
+// AI CONTENT DETECTOR
+// ==========================================
+
 app.post("/api/detect-ai", async (req, res) => {
   try {
     const { text } = req.body;
@@ -241,14 +308,10 @@ app.post("/api/detect-ai", async (req, res) => {
     const prompt = `
 You are TEXTORA, a writing-analysis assistant.
 
-Analyze the following text for characteristics that may be associated
-with AI-generated writing.
+Analyze the text for characteristics that may be associated with AI-generated writing.
 
-Important:
-- This is only a probabilistic assessment.
-- Do not claim certainty.
-- Do not accuse the writer.
-- Do not identify the author.
+This is only a probabilistic assessment.
+Do not claim certainty.
 
 Return ONLY valid JSON:
 
@@ -267,34 +330,31 @@ Text:
 ${text}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt
-    });
+    const resultText = await generateText(prompt);
 
-    let resultText = response.text.trim();
-
-    resultText = resultText
+    const cleaned = resultText
       .replace(/^```json\s*/i, "")
       .replace(/^```\s*/i, "")
       .replace(/\s*```$/i, "")
       .trim();
 
-    const result = JSON.parse(resultText);
+    const result = JSON.parse(cleaned);
 
     res.json(result);
 
   } catch (error) {
-    console.error("Gemini AI detector error:", error);
+    console.error("AI detector error:", error);
 
     res.status(500).json({
       error: "TEXTORA could not analyze the text right now."
     });
   }
 });
-// ===============================
+
+// ==========================================
 // TEXT SUMMARIZER
-// ===============================
+// ==========================================
+
 app.post("/api/summarize", async (req, res) => {
   try {
     const { text } = req.body;
@@ -306,43 +366,41 @@ app.post("/api/summarize", async (req, res) => {
     }
 
     const prompt = `
-You are TEXTORA, a professional text summarization assistant.
+You are TEXTORA, a professional summarization assistant.
 
 Summarize the following text clearly and accurately.
 
 Rules:
-- Preserve the main ideas and important information.
+- Preserve the main ideas.
+- Preserve important information.
 - Do not invent facts.
 - Remove unnecessary repetition.
-- Use clear, natural language.
-- Make the summary significantly shorter than the original.
+- Make the result significantly shorter.
 - Return only the summary.
-- Do not explain your process.
 
 Text:
 ${text}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt
-    });
+    const result = await generateText(prompt);
 
     res.json({
-      result: response.text
+      result: result || "No summary was returned."
     });
 
   } catch (error) {
-    console.error("Gemini summarizer error:", error);
+    console.error("Summarizer error:", error);
 
     res.status(500).json({
       error: "TEXTORA could not summarize the text right now."
     });
   }
 });
-// ===============================
-// AI EMAIL WRITER
-// ===============================
+
+// ==========================================
+// EMAIL WRITER
+// ==========================================
+
 app.post("/api/email", async (req, res) => {
   try {
     const {
@@ -361,7 +419,7 @@ app.post("/api/email", async (req, res) => {
     const prompt = `
 You are TEXTORA, a professional email writing assistant.
 
-Write a clear and professional email based on the information below.
+Write a clear and professional email.
 
 Email purpose:
 ${topic}
@@ -378,13 +436,11 @@ ${details || "None"}
 Rules:
 - Create an appropriate subject line.
 - Write a natural greeting.
-- Clearly communicate the purpose of the email.
-- Use professional and appropriate language.
+- Clearly communicate the purpose.
+- Use professional language.
 - Include a suitable closing.
-- Do not invent names, dates, companies, facts, or other details.
-- Do not claim information that was not provided.
+- Do not invent information.
 - Return only the finished email.
-- Do not explain your process.
 
 Format:
 
@@ -393,23 +449,27 @@ Subject: [subject]
 [Email body]
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt
-    });
+    const result = await generateText(prompt);
 
     res.json({
-      result: response.text
+      result: result || "No email was returned."
     });
 
   } catch (error) {
-    console.error("Gemini email writer error:", error);
+    console.error("Email writer error:", error);
 
     res.status(500).json({
       error: "TEXTORA could not write the email right now."
     });
   }
 });
+
+// ==========================================
+// START SERVER
+// ==========================================
+
 app.listen(PORT, () => {
-  console.log(`🚀 TEXTORA backend running at http://localhost:${PORT}`);
+  console.log(
+    `🚀 TEXTORA backend running on port ${PORT}`
+  );
 });
