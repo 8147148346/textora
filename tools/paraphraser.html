@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="TEXTORA AI Paraphraser — Rewrite text clearly while preserving its original meaning."
+  >
+
+  <title>TEXTORA — AI Paraphraser</title>
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css"
+  >
+</head>
+
+<body data-tool="paraphraser">
+
+  <!-- ==============================
+       HEADER
+  =============================== -->
+
+  <header class="site-header">
+
+    <a
+      class="brand"
+      href="../index.html"
+    >
+      TEXTORA
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+
+      <a href="../index.html#tools">
+        Tools
+      </a>
+
+      <a href="../pricing.html">
+        Pricing
+      </a>
+
+      <a href="../about.html">
+        About
+      </a>
+
+      <a href="../contact.html">
+        Contact
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- ==============================
+       MAIN TOOL
+  =============================== -->
+
+  <main class="tool-page">
+
+    <span class="eyebrow">
+      AI WRITING TOOL
+    </span>
+
+    <h1>
+      AI Paraphraser
+    </h1>
+
+    <p>
+      Rewrite your text while preserving its original meaning,
+      improving clarity, grammar, and readability.
+    </p>
+
+
+    <div class="tool-shell">
+
+      <!-- ==========================
+           INPUT
+      =========================== -->
+
+      <div>
+
+        <label for="input">
+          Your text
+        </label>
+
+        <textarea
+          id="input"
+          placeholder="Paste your text here..."
+          rows="12"
+        ></textarea>
+
+
+        <div class="counter">
+
+          <span id="count">
+            0 characters
+          </span>
+
+          <select id="style" aria-label="Writing style">
+
+            <option value="Standard">
+              Standard
+            </option>
+
+            <option value="Fluent">
+              Fluent
+            </option>
+
+            <option value="Formal">
+              Formal
+            </option>
+
+            <option value="Academic">
+              Academic
+            </option>
+
+            <option value="Simple">
+              Simple
+            </option>
+
+            <option value="Creative">
+              Creative
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="btn"
+          id="run"
+        >
+          Paraphrase
+        </button>
+
+      </div>
+
+
+      <!-- ==========================
+           RESULT
+      =========================== -->
+
+      <div>
+
+        <label for="result">
+          Result
+        </label>
+
+        <div
+          class="result"
+          id="result"
+          aria-live="polite"
+        >
+          Your result will appear here.
+        </div>
+
+
+        <div class="result-actions">
+
+          <button
+            type="button"
+            class="btn btn-small"
+            id="copy"
+          >
+            Copy
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-small btn-ghost"
+            id="download"
+          >
+            Download
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==============================
+         INFO
+    =============================== -->
+
+    <div class="notice">
+
+      <strong>TEXTORA AI Paraphraser</strong>
+
+      <br>
+
+      Your text is processed through the secure TEXTORA
+      backend. Your Gemini API key remains on the server
+      and is never exposed in the browser.
+
+    </div>
+
+  </main>
+
+
+  <!-- ==============================
+       JAVASCRIPT
+  =============================== -->
+
+  <script src="../assets/js/tool.js"></script>
+
+</body>
+
+</html>

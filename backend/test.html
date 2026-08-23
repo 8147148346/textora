@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TEXTORA API Test</title>
+</head>
+<body>
+  <h2>TEXTORA Gemini Test</h2>
+
+  <textarea id="text" rows="6" cols="60">
+Artificial intelligence is changing the way students learn and work.
+  </textarea>
+
+  <br><br>
+
+  <button id="test">Test Gemini</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    document.getElementById("test").addEventListener("click", async () => {
+      const text = document.getElementById("text").value;
+      const result = document.getElementById("result");
+
+      result.textContent = "Processing...";
+
+      try {
+        const response = await fetch("http://localhost:3000/api/paraphrase", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            text: text,
+            style: "Standard"
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Request failed");
+        }
+
+        result.textContent = data.result;
+      } catch (error) {
+        result.textContent = "Error: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

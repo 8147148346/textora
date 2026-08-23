@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TEXTORA Text Summarizer</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body data-tool="summarizer">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">TEXTORA</a>
+
+  <nav class="nav">
+    <a href="../index.html#tools">Tools</a>
+    <a href="../pricing.html">Pricing</a>
+  </nav>
+</header>
+
+<main class="tool-page">
+
+  <span class="eyebrow">TEXT SUMMARY</span>
+
+  <h1>Text Summarizer</h1>
+
+  <p>
+    Turn long text into a clear and concise summary with TEXTORA.
+  </p>
+
+  <div class="tool-shell single">
+
+    <textarea
+      id="input"
+      placeholder="Paste your text here..."
+    ></textarea>
+
+    <div class="counter">
+      <span id="count">0 characters</span>
+    </div>
+
+    <button class="btn" id="run">
+      Summarize Text
+    </button>
+
+    <div class="result" id="result">
+      Your summary will appear here.
+    </div>
+
+  </div>
+
+  <div class="notice">
+    Review the generated summary and make sure it accurately represents
+    the original text.
+  </div>
+
+</main>
+
+<script src="../assets/js/tool.js"></script>
+
+</body>
+</html>

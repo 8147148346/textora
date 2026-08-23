@@ -1,0 +1,560 @@
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111827;background:#fff;line-height:1.6}a{text-decoration:none;color:inherit}.site-header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;border-bottom:1px solid #e5e7eb;background:#f3f7ff;position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}.brand{font-weight:900;letter-spacing:-.04em;font-size:1.35rem}.nav{display:flex;align-items:center;gap:24px;font-size:.95rem}.nav a:hover{color:#4f46e5}.menu-toggle{display:none;border:0;background:none;font-size:1.5rem}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:12px;padding:12px 20px;background:#4f46e5;color:#fff;font-weight:750;cursor:pointer;box-shadow:0 8px 24px rgba(79,70,229,.18)}.btn:hover{transform:translateY(-1px)}.btn-small{padding:9px 14px;font-size:.88rem}.btn-ghost{background:#fff;color:#374151;border:1px solid #d1d5db;box-shadow:none}.hero{max-width:1200px;margin:auto;padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.eyebrow{font-size:.78rem;font-weight:850;letter-spacing:.16em;color:#4f46e5}.hero h1,.page h1,.tool-page h1{font-size:clamp(2.7rem,6vw,5.2rem);line-height:1.03;letter-spacing:-.055em;margin:16px 0}.hero p,.lead{font-size:1.12rem;color:#6b7280;max-width:650px}.hero-actions{display:flex;gap:12px;margin:28px 0}.demo-note{font-size:.8rem!important}.product-preview{background:#111827;border-radius:22px;padding:10px;box-shadow:0 30px 80px rgba(17,24,39,.22)}.window-top{display:flex;align-items:center;gap:6px;color:#fff;padding:9px 10px}.window-top span{width:8px;height:8px;border-radius:50%;background:#6b7280}.window-top b{margin-left:auto;margin-right:auto;font-size:.75rem}.preview-grid{background:#f8fafc;border-radius:14px;display:grid;grid-template-columns:100px 1fr;min-height:330px}.preview-grid aside{padding:18px 12px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:12px}.mini-logo{font-weight:900;font-size:1.3rem;margin-bottom:12px}.preview-grid small{color:#6b7280}.preview-editor{padding:30px}.pill{display:inline-block;background:#ede9fe;color:#5b21b6;padding:5px 9px;border-radius:999px;font-size:.7rem;font-weight:700}.fake-editor{height:100px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:20px 0}.preview-footer{display:flex;justify-content:space-between;align-items:center;color:#6b7280;font-size:.8rem}.section{max-width:1200px;margin:auto;padding:90px 6%}.section-heading{text-align:center;max-width:720px;margin:0 auto 40px}.section h2,.split h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.04em;margin:10px 0}.section-heading p{color:#6b7280}.tool-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}.tool-card{padding:25px;border:1px solid #e5e7eb;border-radius:18px;background:#fff;transition:.2s}.tool-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(17,24,39,.08);border-color:#c7d2fe}.tool-card h3{margin:16px 0 8px}.tool-card p{color:#6b7280;font-size:.92rem;min-height:105px}.tool-card>span:last-child{color:#4f46e5;font-weight:750}.tool-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#eef2ff;color:#4f46e5;font-size:1.25rem;font-weight:900}.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;background:#f8fafc;max-width:none;padding-left:12%;padding-right:12%}.text-link{color:#4f46e5;font-weight:800}.footer{background:#111827;color:#cbd5e1;padding:55px 6%;display:grid;grid-template-columns:2fr repeat(3,1fr);gap:30px;position:relative}.footer strong{color:#fff;font-size:1.2rem}.footer h4{color:#fff;margin-top:0}.footer a{display:block;margin:8px 0;color:#94a3b8}.copyright{
+  grid-column:1/-1;
+  border-top:1px solid #374151;
+  padding-top:22px;
+  font-size:.85rem;
+  color:#94a3b8;
+  text-align:center;
+}.page,.tool-page{max-width:1200px;margin:auto;padding:80px 6%;min-height:70vh}.page.narrow{max-width:850px}.page h1,.tool-page h1{font-size:clamp(2.5rem,5vw,4.3rem)}.info-card,.notice{background:#f8fafc;border:1px solid #e5e7eb;border-radius:18px;padding:24px;margin-top:30px}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}.price-card{border:1px solid #e5e7eb;border-radius:20px;padding:30px}.price-card.featured{border-color:#818cf8;box-shadow:0 20px 50px rgba(79,70,229,.12)}.price-card h2{font-size:2.6rem;margin:10px 0 0}.price-card ul{padding-left:20px;min-height:150px}.contact-form{display:grid;gap:18px;margin-top:35px}.contact-form label{font-weight:700}.contact-form input,.contact-form textarea,.tool-shell input,.tool-shell select,.tool-shell textarea{width:100%;margin-top:7px;padding:13px 14px;border:1px solid #d1d5db;border-radius:12px;font:inherit;background:#fff}.tool-shell{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:35px}.tool-shell.single{display:block}.tool-shell textarea{min-height:300px;resize:vertical}.tool-shell label{font-weight:750}.counter{display:flex;justify-content:space-between;align-items:center;color:#6b7280;font-size:.85rem;margin:8px 0 15px}.result{min-height:300px;border:1px solid #e5e7eb;border-radius:14px;padding:18px;background:#f8fafc;color:#6b7280;white-space:pre-wrap}.result-actions{display:flex;gap:8px;margin-top:12px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.tool-page>p{color:#6b7280}.notice{font-size:.9rem;color:#4b5563}.narrow p{color:#4b5563}@media(max-width:900px){.hero,.split{grid-template-columns:1fr}.tool-grid{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr}.footer{grid-template-columns:1fr 1fr}.tool-shell{grid-template-columns:1fr}.hero{padding-top:60px}}@media(max-width:650px){.site-header{padding:0 5%}.menu-toggle{display:block}.nav{display:none;position:absolute;top:72px;left:0;right:0;background:#fff;padding:18px 5%;border-bottom:1px solid #e5e7eb;flex-direction:column;align-items:flex-start}.nav.open{display:flex}.tool-grid{grid-template-columns:1fr}.footer{grid-template-columns:1fr}.hero-actions{flex-direction:column}.preview-grid{grid-template-columns:1fr}.preview-grid aside{display:none}.form-row{grid-template-columns:1fr}.page,.tool-page,.section{padding:55px 5%}}  /* ==========================================
+   TEXTORA PREMIUM VISUAL UPGRADE
+   ========================================== */
+
+:root {
+  --textora-blue: #2563eb;
+  --textora-indigo: #4f46e5;
+  --textora-dark: #111827;
+  --textora-muted: #64748b;
+  --textora-bg: #f8faff;
+  --textora-white: #ffffff;
+}
+
+/* Main page background */
+body {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.08), transparent 32%),
+    radial-gradient(circle at 90% 10%, rgba(79, 70, 229, 0.07), transparent 30%),
+    var(--textora-bg);
+  color: var(--textora-dark);
+}
+
+/* Header */
+.site-header {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+/* TEXTORA brand */
+.brand {
+  color: var(--textora-blue);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+}
+
+.hero-copy h1 {
+  letter-spacing: -0.045em;
+}
+
+
+/* Buttons */
+.btn {
+  background: linear-gradient(
+    135deg,
+    var(--textora-blue),
+    var(--textora-indigo)
+  );
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.25);
+}
+
+/* Tool cards */
+.tool-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(37, 99, 235, 0.08);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.09);
+}
+
+/* Tool icons */
+.tool-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.12),
+    rgba(79, 70, 229, 0.12)
+  );
+  color: var(--textora-blue);
+}
+
+/* Section headings */
+.section-heading h2 {
+  letter-spacing: -0.035em;
+}
+
+/* Eyebrows */
+.eyebrow {
+  color: var(--textora-blue);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Tool pages */
+.tool-page {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.07), transparent 35%);
+}
+
+/* Tool workspace */
+.tool-shell {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(37, 99, 235, 0.09);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.07);
+}
+
+/* Footer */
+.footer {
+  background: #0f172a;
+}
+
+
+/* TEXTORA preview logo */
+.mini-logo {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+}
+
+.mini-logo span {
+  color: #ffffff;
+}
+
+
+/* TEXTORA hero ghost button */
+.btn.btn-ghost {
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.btn.btn-ghost:hover {
+  background: #f8faff;
+  color: #1d4ed8;
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   TEXTORA PREMIUM HEADER
+   ========================================== */
+
+.site-header {
+  background: rgba(248, 250, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.10);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+.site-header .nav a {
+  color: #475569;
+  transition: color 0.2s ease;
+}
+
+.site-header .nav a:hover {
+  color: #2563eb;
+}
+
+.site-header .brand {
+  color: #2563eb;
+}
+
+
+/* TEXTORA FINAL HEADER + BUTTON OVERRIDE */
+
+.site-header {
+  background: linear-gradient(
+    180deg,
+    #eef4ff 0%,
+    #f8faff 100%
+  ) !important;
+  border-bottom: 1px solid #dbe7ff !important;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.06) !important;
+}
+
+.site-header .brand {
+  color: #2563eb !important;
+}
+
+.site-header .nav a {
+  color: #475569 !important;
+}
+
+.site-header .nav a:hover {
+  color: #2563eb !important;
+}
+
+/* Keep Start Writing Free blue */
+.site-header .btn,
+.hero-actions .btn:not(.btn-ghost) {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5
+  ) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+/* Keep Explore Tools white */
+.hero-actions .btn.btn-ghost {
+  background: #ffffff !important;
+  color: #2563eb !important;
+  border: 1px solid #dbe7ff !important;
+}
+
+.site-header .nav .btn.btn-small{
+  background:#fff !important;
+  color:#4f46e5 !important;
+  border:1px solid #d1d5db !important;
+  box-shadow:none !important;
+}
+
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+}
+
+.tool-card{
+  grid-column:span 3;
+}
+
+.tool-card:nth-child(5){
+  grid-column:3 / span 3;
+}
+
+.tool-card:nth-child(6){
+  grid-column:6 / span 3;
+}
+
+.tool-card:nth-child(7){
+  grid-column:9 / span 3;
+}
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+}
+
+.tool-card{
+  grid-column:span 3;
+}
+
+.tool-card:nth-child(5){
+  grid-column:3 / span 3;
+}
+
+.tool-card:nth-child(6){
+  grid-column:6 / span 3;
+}
+
+.tool-card:nth-child(7){
+  grid-column:9 / span 3;
+}
+
+@media(max-width:900px){
+  .tool-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .tool-card,
+  .tool-card:nth-child(5),
+  .tool-card:nth-child(6),
+  .tool-card:nth-child(7){
+    grid-column:span 1;
+  }
+}
+
+@media(max-width:650px){
+  .tool-grid{
+    grid-template-columns:1fr;
+  }
+
+  .tool-card,
+  .tool-card:nth-child(5),
+  .tool-card:nth-child(6),
+  .tool-card:nth-child(7){
+    grid-column:span 1;
+  }
+}
+
+/* ==========================================
+   TEXTORA — HOW IT WORKS
+   ========================================== */
+
+.how-it-works {
+  position: relative;
+  overflow: hidden;
+}
+
+.how-it-works::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  background: rgba(37, 99, 235, 0.07);
+  border-radius: 50%;
+  filter: blur(70px);
+  top: 20px;
+  left: -120px;
+  pointer-events: none;
+}
+
+.steps-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.step-card {
+  position: relative;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(37, 99, 235, 0.10);
+  border-radius: 22px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  overflow: hidden;
+}
+
+.step-card::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(79, 70, 229, 0.06);
+  border-radius: 50%;
+  right: -55px;
+  bottom: -55px;
+  transition: transform 0.4s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(37, 99, 235, 0.22);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.11);
+}
+
+.step-card:hover::after {
+  transform: scale(1.5);
+}
+
+.step-number {
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+  margin-bottom: 18px;
+}
+
+.step-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.12),
+    rgba(79, 70, 229, 0.12)
+  );
+  color: #2563eb;
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin-bottom: 22px;
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover .step-icon {
+  transform: rotate(-4deg) scale(1.08);
+}
+
+.step-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.step-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 650px) {
+  .step-card {
+    padding: 26px;
+  }
+
+  .steps-grid {
+    gap: 16px;
+  }
+}
+
+/* =========================================
+   TEXTORA — HOW IT WORKS
+   ========================================= */
+
+.how-it-works {
+  position: relative;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 42px;
+}
+
+.step-card {
+  position: relative;
+  padding: 32px 28px;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ffffff, #f8fbff);
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+}
+
+.step-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(37, 99, 235, 0.14);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+.step-card:hover::before {
+  opacity: 1;
+}
+
+.step-number {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #2563eb;
+  margin-bottom: 18px;
+}
+
+.step-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.step-card h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #111827;
+}
+
+.step-card p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  .step-card {
+    padding: 26px 22px;
+  }
+}
+
+/* ==========================================
+   TEXTORA AI LOADING STATE
+   ========================================== */
+
+.result.loading {
+  position: relative;
+  color: #64748b;
+}
+
+.result.loading::after {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+  vertical-align: middle;
+  border: 2px solid #cbd5e1;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: textora-spin 0.8s linear infinite;
+}
+
+@keyframes textora-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
