@@ -588,3 +588,609 @@ body {
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+
+/* ==========================================
+   TEXTORA — PREMIUM TOOL PAGE EXPERIENCE
+   ========================================== */
+
+/* Better tool page background */
+.tool-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(37, 99, 235, 0.10),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(79, 70, 229, 0.08),
+      transparent 32%
+    );
+}
+
+/* Decorative background glow */
+.tool-page::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.06);
+  filter: blur(90px);
+  top: 120px;
+  right: -220px;
+  pointer-events: none;
+}
+
+.tool-page::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(79, 70, 229, 0.05);
+  filter: blur(80px);
+  bottom: 80px;
+  left: -180px;
+  pointer-events: none;
+}
+
+/* Keep content above background effects */
+.tool-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tool heading */
+.tool-page h1 {
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.tool-page > p {
+  font-size: 1.05rem;
+  color: #64748b;
+}
+
+/* Premium workspace */
+.tool-shell {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow:
+    0 25px 70px rgba(15, 23, 42, 0.08),
+    0 4px 15px rgba(37, 99, 235, 0.04);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Input labels */
+.tool-shell label {
+  display: block;
+  color: #1e293b;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* Textareas and inputs */
+.tool-shell textarea,
+.tool-shell input,
+.tool-shell select {
+  border: 1px solid #dbe4f0;
+  background: #fbfdff;
+  border-radius: 16px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.tool-shell textarea:focus,
+.tool-shell input:focus,
+.tool-shell select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.10),
+    0 8px 25px rgba(37, 99, 235, 0.06);
+}
+
+/* Main textarea */
+.tool-shell textarea {
+  min-height: 300px;
+  line-height: 1.7;
+}
+
+/* Placeholder */
+.tool-shell textarea::placeholder,
+.tool-shell input::placeholder {
+  color: #94a3b8;
+}
+
+/* Character counter */
+.counter {
+  padding: 2px 4px;
+  color: #64748b;
+}
+
+/* Main action button */
+.tool-shell > .btn,
+.tool-shell button#run {
+  margin-top: 4px;
+  min-height: 48px;
+  border-radius: 14px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* Button while processing */
+.tool-shell button#run:disabled {
+  opacity: 0.75;
+  cursor: wait;
+  transform: none;
+  box-shadow:
+    0 8px 25px rgba(37, 99, 235, 0.12);
+}
+
+/* Result panel */
+.result {
+  position: relative;
+  min-height: 300px;
+  margin-top: 22px;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid #dbe4f0;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fbff
+    );
+  color: #334155;
+  line-height: 1.75;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 8px 25px rgba(15,23,42,0.04);
+}
+
+/* Result loading state */
+.result.loading {
+  border-color: rgba(37, 99, 235, 0.20);
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f4f8ff
+    );
+  animation: textora-pulse 2s ease-in-out infinite;
+}
+
+/* Loading spinner */
+.result.loading::after {
+  width: 20px;
+  height: 20px;
+  margin-left: 12px;
+  border: 2px solid #dbeafe;
+  border-top-color: #2563eb;
+  box-shadow: 0 0 12px rgba(37,99,235,0.18);
+}
+
+/* Copy / Download area */
+.result-actions {
+  margin-top: 14px;
+  padding-top: 4px;
+}
+
+/* Result action buttons */
+.result-actions button {
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid #dbe4f0;
+  background: #ffffff;
+  color: #334155;
+  font-weight: 750;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.result-actions button:hover {
+  transform: translateY(-2px);
+  border-color: #93c5fd;
+  color: #2563eb;
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.10);
+}
+
+/* Notice box */
+.notice {
+  position: relative;
+  border-radius: 16px;
+  background: rgba(239, 246, 255, 0.75);
+  border: 1px solid rgba(37, 99, 235, 0.10);
+  color: #475569;
+}
+
+/* Small entrance animation */
+.tool-shell {
+  animation: textora-workspace-in 0.55s ease both;
+}
+
+@keyframes textora-workspace-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Processing animation */
+@keyframes textora-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 8px 25px rgba(15,23,42,0.04);
+  }
+
+  50% {
+    box-shadow:
+      0 12px 35px rgba(37,99,235,0.10);
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .tool-page {
+    padding-top: 60px;
+  }
+
+  .tool-shell {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .result {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 650px) {
+  .tool-shell {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .tool-shell textarea {
+    min-height: 240px;
+  }
+
+  .result {
+    min-height: 220px;
+    padding: 18px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .result-actions button {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================
+   TEXTORA — PREMIUM TOOL PAGE EXPERIENCE
+   ========================================== */
+
+/* Better tool page background */
+.tool-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(37, 99, 235, 0.10),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(79, 70, 229, 0.08),
+      transparent 32%
+    );
+}
+
+/* Decorative background glow */
+.tool-page::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.06);
+  filter: blur(90px);
+  top: 120px;
+  right: -220px;
+  pointer-events: none;
+}
+
+.tool-page::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(79, 70, 229, 0.05);
+  filter: blur(80px);
+  bottom: 80px;
+  left: -180px;
+  pointer-events: none;
+}
+
+/* Keep content above background effects */
+.tool-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tool heading */
+.tool-page h1 {
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.tool-page > p {
+  font-size: 1.05rem;
+  color: #64748b;
+}
+
+/* Premium workspace */
+.tool-shell {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow:
+    0 25px 70px rgba(15, 23, 42, 0.08),
+    0 4px 15px rgba(37, 99, 235, 0.04);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Input labels */
+.tool-shell label {
+  display: block;
+  color: #1e293b;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* Textareas and inputs */
+.tool-shell textarea,
+.tool-shell input,
+.tool-shell select {
+  border: 1px solid #dbe4f0;
+  background: #fbfdff;
+  border-radius: 16px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.tool-shell textarea:focus,
+.tool-shell input:focus,
+.tool-shell select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.10),
+    0 8px 25px rgba(37, 99, 235, 0.06);
+}
+
+/* Main textarea */
+.tool-shell textarea {
+  min-height: 300px;
+  line-height: 1.7;
+}
+
+/* Placeholder */
+.tool-shell textarea::placeholder,
+.tool-shell input::placeholder {
+  color: #94a3b8;
+}
+
+/* Character counter */
+.counter {
+  padding: 2px 4px;
+  color: #64748b;
+}
+
+/* Main action button */
+.tool-shell > .btn,
+.tool-shell button#run {
+  margin-top: 4px;
+  min-height: 48px;
+  border-radius: 14px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* Button while processing */
+.tool-shell button#run:disabled {
+  opacity: 0.75;
+  cursor: wait;
+  transform: none;
+  box-shadow:
+    0 8px 25px rgba(37, 99, 235, 0.12);
+}
+
+/* Result panel */
+.result {
+  position: relative;
+  min-height: 300px;
+  margin-top: 22px;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid #dbe4f0;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fbff
+    );
+  color: #334155;
+  line-height: 1.75;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 8px 25px rgba(15,23,42,0.04);
+}
+
+/* Result loading state */
+.result.loading {
+  border-color: rgba(37, 99, 235, 0.20);
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f4f8ff
+    );
+  animation: textora-pulse 2s ease-in-out infinite;
+}
+
+/* Loading spinner */
+.result.loading::after {
+  width: 20px;
+  height: 20px;
+  margin-left: 12px;
+  border: 2px solid #dbeafe;
+  border-top-color: #2563eb;
+  box-shadow: 0 0 12px rgba(37,99,235,0.18);
+}
+
+/* Copy / Download area */
+.result-actions {
+  margin-top: 14px;
+  padding-top: 4px;
+}
+
+/* Result action buttons */
+.result-actions button {
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid #dbe4f0;
+  background: #ffffff;
+  color: #334155;
+  font-weight: 750;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.result-actions button:hover {
+  transform: translateY(-2px);
+  border-color: #93c5fd;
+  color: #2563eb;
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.10);
+}
+
+/* Notice box */
+.notice {
+  position: relative;
+  border-radius: 16px;
+  background: rgba(239, 246, 255, 0.75);
+  border: 1px solid rgba(37, 99, 235, 0.10);
+  color: #475569;
+}
+
+/* Small entrance animation */
+.tool-shell {
+  animation: textora-workspace-in 0.55s ease both;
+}
+
+@keyframes textora-workspace-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Processing animation */
+@keyframes textora-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 8px 25px rgba(15,23,42,0.04);
+  }
+
+  50% {
+    box-shadow:
+      0 12px 35px rgba(37,99,235,0.10);
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .tool-page {
+    padding-top: 60px;
+  }
+
+  .tool-shell {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .result {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 650px) {
+  .tool-shell {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .tool-shell textarea {
+    min-height: 240px;
+  }
+
+  .result {
+    min-height: 220px;
+    padding: 18px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .result-actions button {
+    width: 100%;
+  }
+}
