@@ -25,8 +25,8 @@ app.use(
 // RATE LIMITING
 // ==========================================
 
-// Protect TEXTORA API from excessive requests.
-// Each IP can make up to 30 requests every 15 minutes.
+// Protect TEXTORA AI tools from excessive requests.
+// Each IP can make up to 30 AI requests every 15 minutes.
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -41,8 +41,16 @@ const apiLimiter = rateLimit({
   }
 });
 
-// Apply protection only to API routes.
-app.use("/api/", apiLimiter);
+// Apply rate limiting only to AI endpoints.
+// Health check remains unrestricted.
+
+app.use("/api/paraphrase", apiLimiter);
+app.use("/api/humanize", apiLimiter);
+app.use("/api/grammar", apiLimiter);
+app.use("/api/essay", apiLimiter);
+app.use("/api/detect-ai", apiLimiter);
+app.use("/api/summarize", apiLimiter);
+app.use("/api/email", apiLimiter);
 
 // ==========================================
 // GEMINI API
