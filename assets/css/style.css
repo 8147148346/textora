@@ -558,3 +558,33 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+/* ==========================================
+   TEXTORA RESULT ACTIONS
+   Copy + Download buttons
+   ========================================== */
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.result-actions button {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: pointer;
+  min-width: 100px;
+  justify-content: center;
+}
+
+#copy,
+#download {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
