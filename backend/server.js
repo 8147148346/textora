@@ -24,60 +24,95 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
 });
 
-const MODEL = "gemini-3.7-flash";
+// Try models in order
+const MODELS = [
+  "gemini-3.7-flash",
+  "gemini-3.6-flash",
+  "gemini-3.5-flash"
+];
 
 // ==========================================
-// GEMINI HELPER WITH SMART RETRY
+// GEMINI HELPER
 // ==========================================
 
 async function generateText(prompt) {
-  const maxAttempts = 5;
+  let lastError;
 
-  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    try {
-      const response = await ai.models.generateContent({
-        model: MODEL,
-        contents: prompt
-      });
+  for (const model of MODELS) {
 
-      const text = response?.text || "";
+    for (let attempt = 1; attempt <= 3; attempt++) {
 
-      if (!text.trim()) {
+      try {
+
+        console.log(
+          `🤖 Trying ${model} - attempt ${attempt}/3`
+        );
+
+        const response = await ai.models.generateContent({
+          model: model,
+          contents: prompt
+        });
+
+        const text = response?.text || "";
+
+        if (text.trim()) {
+          console.log(`✅ Gemini response from ${model}`);
+          return text;
+        }
+
         throw new Error("Gemini returned an empty response.");
+
+      } catch (error) {
+
+        lastError = error;
+
+        const status = Number(
+          error?.status ||
+          error?.code ||
+          0
+        );
+
+        console.error(
+          `❌ ${model} attempt ${attempt}:`,
+          error?.message || error
+        );
+
+        const temporaryError =
+          status === 429 ||
+          status === 500 ||
+          status === 502 ||
+          status === 503 ||
+          status === 504;
+
+        // For permanent errors, immediately try next model
+        if (!temporaryError) {
+          break;
+        }
+
+        // Retry temporary errors
+        if (attempt < 3) {
+
+          const waitTime = attempt * 3000;
+
+          console.log(
+            `⏳ Waiting ${waitTime / 1000}s before retry...`
+          );
+
+          await new Promise(resolve =>
+            setTimeout(resolve, waitTime)
+          );
+        }
       }
-
-      return text;
-
-    } catch (error) {
-      const status = Number(error?.status || error?.code || 0);
-
-      console.error(
-        `Gemini attempt ${attempt}/${maxAttempts} failed:`,
-        error?.message || error
-      );
-
-      const temporaryError =
-        status === 429 ||
-        status === 500 ||
-        status === 502 ||
-        status === 503 ||
-        status === 504;
-
-      if (!temporaryError || attempt >= maxAttempts) {
-        throw error;
-      }
-
-      const waitTime = attempt * 5000;
-
-      console.log(
-        `⏳ Gemini temporarily unavailable. Retrying in ${waitTime / 1000}s...`
-      );
-
-      await new Promise(resolve => setTimeout(resolve, waitTime));
     }
+
+    console.log(
+      `➡️ Moving to next Gemini model...`
+    );
   }
 
-  throw new Error("Gemini request failed after multiple attempts.");
+  throw lastError || new Error(
+    "All Gemini models failed."
+  );
 }
 
 // ==========================================
@@ -85,11 +120,13 @@ async function generateText(prompt) {
 // ==========================================
 
 app.get("/api/health", (req, res) => {
+
   res.json({
     ok: true,
     message: "TEXTORA backend is running",
-    model: MODEL
+    models: MODELS
   });
+
 });
 
 // ==========================================
@@ -97,13 +134,20 @@ app.get("/api/health", (req, res) => {
 // ==========================================
 
 app.post("/api/paraphrase", async (req, res) => {
+
   try {
-    const { text, style = "Standard" } = req.body;
+
+    const {
+      text,
+      style = "Standard"
+    } = req.body;
 
     if (!text || !text.trim()) {
+
       return res.status(400).json({
         error: "Please enter some text."
       });
+
     }
 
     const prompt = `
@@ -111,13 +155,15 @@ You are TEXTORA, a professional writing assistant.
 
 Paraphrase the following text while preserving its original meaning.
 
-Writing style: ${style}
+Writing style:
+${style}
 
 Rules:
-- Preserve the meaning and important facts.
-- Do not add facts.
+- Preserve the original meaning.
+- Preserve important facts.
+- Do not invent facts.
 - Improve clarity and natural flow.
-- Keep the text readable.
+- Keep the writing readable.
 - Return only the paraphrased text.
 - Do not explain your changes.
 
@@ -132,12 +178,19 @@ ${text}
     });
 
   } catch (error) {
-    console.error("Paraphraser error:", error);
+
+    console.error(
+      "❌ Paraphraser error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not paraphrase the text right now."
+      error:
+        "TEXTORA could not paraphrase the text right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -145,13 +198,20 @@ ${text}
 // ==========================================
 
 app.post("/api/humanize", async (req, res) => {
+
   try {
-    const { text, style = "Natural" } = req.body;
+
+    const {
+      text,
+      style = "Natural"
+    } = req.body;
 
     if (!text || !text.trim()) {
+
       return res.status(400).json({
         error: "Please enter some text."
       });
+
     }
 
     const prompt = `
@@ -159,7 +219,8 @@ You are TEXTORA, a professional writing assistant.
 
 Improve the following text so it sounds natural, clear and readable.
 
-Writing style: ${style}
+Writing style:
+${style}
 
 Rules:
 - Preserve the original meaning.
@@ -181,12 +242,19 @@ ${text}
     });
 
   } catch (error) {
-    console.error("Humanizer error:", error);
+
+    console.error(
+      "❌ Humanizer error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not improve the text right now."
+      error:
+        "TEXTORA could not improve the text right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -194,13 +262,17 @@ ${text}
 // ==========================================
 
 app.post("/api/grammar", async (req, res) => {
+
   try {
+
     const { text } = req.body;
 
     if (!text || !text.trim()) {
+
       return res.status(400).json({
         error: "Please enter some text."
       });
+
     }
 
     const prompt = `
@@ -233,12 +305,19 @@ ${text}
     });
 
   } catch (error) {
-    console.error("Grammar error:", error);
+
+    console.error(
+      "❌ Grammar error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not check the grammar right now."
+      error:
+        "TEXTORA could not check the grammar right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -246,7 +325,9 @@ ${text}
 // ==========================================
 
 app.post("/api/essay", async (req, res) => {
+
   try {
+
     const {
       topic,
       instructions = "",
@@ -255,9 +336,11 @@ app.post("/api/essay", async (req, res) => {
     } = req.body;
 
     if (!topic || !topic.trim()) {
+
       return res.status(400).json({
         error: "Please enter an essay topic."
       });
+
     }
 
     const prompt = `
@@ -294,12 +377,19 @@ Rules:
     });
 
   } catch (error) {
-    console.error("Essay error:", error);
+
+    console.error(
+      "❌ Essay error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not create the essay right now."
+      error:
+        "TEXTORA could not create the essay right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -307,13 +397,17 @@ Rules:
 // ==========================================
 
 app.post("/api/detect-ai", async (req, res) => {
+
   try {
+
     const { text } = req.body;
 
     if (!text || !text.trim()) {
+
       return res.status(400).json({
         error: "Please enter some text."
       });
+
     }
 
     const prompt = `
@@ -321,10 +415,15 @@ You are TEXTORA, a writing-analysis assistant.
 
 Analyze the text for characteristics that may be associated with AI-generated writing.
 
-This is only a probabilistic assessment.
-Do not claim certainty.
+Important:
+- This is only a probabilistic assessment.
+- Do not claim certainty.
+- Do not accuse the writer.
+- Do not identify the author.
 
-Return ONLY valid JSON:
+Return ONLY valid JSON.
+
+Use exactly this structure:
 
 {
   "assessment": "Likely AI-like / Mixed signals / Likely human-like",
@@ -341,25 +440,35 @@ Text:
 ${text}
 `;
 
-    const resultText = await generateText(prompt);
+    const resultText =
+      await generateText(prompt);
 
-    const cleaned = resultText
-      .replace(/^```json\s*/i, "")
-      .replace(/^```\s*/i, "")
-      .replace(/\s*```$/i, "")
-      .trim();
+    const cleaned =
+      resultText
+        .replace(/^```json\s*/i, "")
+        .replace(/^```\s*/i, "")
+        .replace(/\s*```$/i, "")
+        .trim();
 
-    const result = JSON.parse(cleaned);
+    const result =
+      JSON.parse(cleaned);
 
     res.json(result);
 
   } catch (error) {
-    console.error("AI detector error:", error);
+
+    console.error(
+      "❌ AI detector error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not analyze the text right now."
+      error:
+        "TEXTORA could not analyze the text right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -367,13 +476,17 @@ ${text}
 // ==========================================
 
 app.post("/api/summarize", async (req, res) => {
+
   try {
+
     const { text } = req.body;
 
     if (!text || !text.trim()) {
+
       return res.status(400).json({
         error: "Please enter some text."
       });
+
     }
 
     const prompt = `
@@ -395,19 +508,28 @@ Text:
 ${text}
 `;
 
-    const result = await generateText(prompt);
+    const result =
+      await generateText(prompt);
 
     res.json({
-      result: result || "No summary was returned."
+      result:
+        result || "No summary was returned."
     });
 
   } catch (error) {
-    console.error("Summarizer error:", error);
+
+    console.error(
+      "❌ Summarizer error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not summarize the text right now."
+      error:
+        "TEXTORA could not summarize the text right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -415,7 +537,9 @@ ${text}
 // ==========================================
 
 app.post("/api/email", async (req, res) => {
+
   try {
+
     const {
       topic,
       details = "",
@@ -424,9 +548,12 @@ app.post("/api/email", async (req, res) => {
     } = req.body;
 
     if (!topic || !topic.trim()) {
+
       return res.status(400).json({
-        error: "Please enter what the email is about."
+        error:
+          "Please enter what the email is about."
       });
+
     }
 
     const prompt = `
@@ -462,19 +589,28 @@ Subject: [subject]
 [Email body]
 `;
 
-    const result = await generateText(prompt);
+    const result =
+      await generateText(prompt);
 
     res.json({
-      result: result || "No email was returned."
+      result:
+        result || "No email was returned."
     });
 
   } catch (error) {
-    console.error("Email writer error:", error);
+
+    console.error(
+      "❌ Email writer error:",
+      error
+    );
 
     res.status(500).json({
-      error: "TEXTORA could not write the email right now."
+      error:
+        "TEXTORA could not write the email right now."
     });
+
   }
+
 });
 
 // ==========================================
@@ -482,7 +618,9 @@ Subject: [subject]
 // ==========================================
 
 app.listen(PORT, () => {
+
   console.log(
     `🚀 TEXTORA backend running on port ${PORT}`
   );
+
 });
