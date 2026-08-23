@@ -1194,3 +1194,252 @@ body {
     width: 100%;
   }
 }
+
+
+/* ==========================================
+   TEXTORA — HERO LIGHT WATER WAVES
+   ========================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Soft moving wave layer */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  height: 260px;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+/* First wave */
+.hero::before {
+  top: 35%;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(37, 99, 235, 0.10) 0%,
+      rgba(37, 99, 235, 0.05) 35%,
+      transparent 70%
+    );
+  transform: rotate(-3deg);
+  animation: textora-wave-one 9s ease-in-out infinite alternate;
+}
+
+/* Second wave */
+.hero::after {
+  top: 50%;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(79, 70, 229, 0.08) 0%,
+      rgba(96, 165, 250, 0.04) 35%,
+      transparent 70%
+    );
+  transform: rotate(3deg);
+  animation: textora-wave-two 12s ease-in-out infinite alternate;
+}
+
+/* Smooth wave movement */
+@keyframes textora-wave-one {
+  0% {
+    transform: translateX(-5%) translateY(0) rotate(-3deg) scaleY(0.9);
+  }
+
+  50% {
+    transform: translateX(3%) translateY(18px) rotate(2deg) scaleY(1.05);
+  }
+
+  100% {
+    transform: translateX(8%) translateY(-8px) rotate(-2deg) scaleY(0.95);
+  }
+}
+
+@keyframes textora-wave-two {
+  0% {
+    transform: translateX(6%) translateY(10px) rotate(3deg) scaleY(1);
+  }
+
+  50% {
+    transform: translateX(-4%) translateY(-15px) rotate(-2deg) scaleY(1.08);
+  }
+
+  100% {
+    transform: translateX(-9%) translateY(8px) rotate(2deg) scaleY(0.92);
+  }
+}
+
+/* Keep hero content above the animation */
+.hero-copy,
+.product-preview {
+  position: relative;
+  z-index: 2;
+}
+
+/* Extra subtle moving highlight */
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: -120px;
+  top: 20px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.05);
+  filter: blur(70px);
+  pointer-events: none;
+  animation: textora-glow 7s ease-in-out infinite alternate;
+}
+
+@keyframes textora-glow {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: translate(100px, 35px);
+    opacity: 0.8;
+  }
+}
+
+/* Respect reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .hero::after,
+  .hero-copy::after {
+    animation: none;
+  }
+}
+
+/* ==========================================
+   TEXTORA — HERO LIGHT WATER WAVES
+   ========================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Soft moving wave layer */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  height: 260px;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+/* First wave */
+.hero::before {
+  top: 35%;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(37, 99, 235, 0.10) 0%,
+      rgba(37, 99, 235, 0.05) 35%,
+      transparent 70%
+    );
+  transform: rotate(-3deg);
+  animation: textora-wave-one 9s ease-in-out infinite alternate;
+}
+
+/* Second wave */
+.hero::after {
+  top: 50%;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(79, 70, 229, 0.08) 0%,
+      rgba(96, 165, 250, 0.04) 35%,
+      transparent 70%
+    );
+  transform: rotate(3deg);
+  animation: textora-wave-two 12s ease-in-out infinite alternate;
+}
+
+/* Smooth wave movement */
+@keyframes textora-wave-one {
+  0% {
+    transform: translateX(-5%) translateY(0) rotate(-3deg) scaleY(0.9);
+  }
+
+  50% {
+    transform: translateX(3%) translateY(18px) rotate(2deg) scaleY(1.05);
+  }
+
+  100% {
+    transform: translateX(8%) translateY(-8px) rotate(-2deg) scaleY(0.95);
+  }
+}
+
+@keyframes textora-wave-two {
+  0% {
+    transform: translateX(6%) translateY(10px) rotate(3deg) scaleY(1);
+  }
+
+  50% {
+    transform: translateX(-4%) translateY(-15px) rotate(-2deg) scaleY(1.08);
+  }
+
+  100% {
+    transform: translateX(-9%) translateY(8px) rotate(2deg) scaleY(0.92);
+  }
+}
+
+/* Keep hero content above the animation */
+.hero-copy,
+.product-preview {
+  position: relative;
+  z-index: 2;
+}
+
+/* Extra subtle moving highlight */
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: -120px;
+  top: 20px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.05);
+  filter: blur(70px);
+  pointer-events: none;
+  animation: textora-glow 7s ease-in-out infinite alternate;
+}
+
+@keyframes textora-glow {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: translate(100px, 35px);
+    opacity: 0.8;
+  }
+}
+
+/* Respect reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .hero::after,
+  .hero-copy::after {
+    animation: none;
+  }
+}
