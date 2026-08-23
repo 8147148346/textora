@@ -24,15 +24,14 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
 });
 
-// Use one model consistently
 const MODEL = "gemini-3.7-flash";
 
 // ==========================================
-// GEMINI HELPER WITH RETRY
+// GEMINI HELPER WITH SMART RETRY
 // ==========================================
 
 async function generateText(prompt) {
-  const maxAttempts = 3;
+  const maxAttempts = 5;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
@@ -41,32 +40,44 @@ async function generateText(prompt) {
         contents: prompt
       });
 
-      return response.text || "";
-    } catch (error) {
-      console.error(
-        `Gemini attempt ${attempt}/${maxAttempts} failed:`,
-        error.message || error
-      );
+      const text = response?.text || "";
 
-      const status = error?.status || error?.code;
-
-      // Retry temporary errors
-      if (
-        (status === 429 || status === 500 || status === 502 || status === 503) &&
-        attempt < maxAttempts
-      ) {
-        await new Promise(resolve =>
-          setTimeout(resolve, attempt * 2000)
-        );
-
-        continue;
+      if (!text.trim()) {
+        throw new Error("Gemini returned an empty response.");
       }
 
-      throw error;
+      return text;
+
+    } catch (error) {
+      const status = Number(error?.status || error?.code || 0);
+
+      console.error(
+        `Gemini attempt ${attempt}/${maxAttempts} failed:`,
+        error?.message || error
+      );
+
+      const temporaryError =
+        status === 429 ||
+        status === 500 ||
+        status === 502 ||
+        status === 503 ||
+        status === 504;
+
+      if (!temporaryError || attempt >= maxAttempts) {
+        throw error;
+      }
+
+      const waitTime = attempt * 5000;
+
+      console.log(
+        `⏳ Gemini temporarily unavailable. Retrying in ${waitTime / 1000}s...`
+      );
+
+      await new Promise(resolve => setTimeout(resolve, waitTime));
     }
   }
 
-  throw new Error("Gemini request failed.");
+  throw new Error("Gemini request failed after multiple attempts.");
 }
 
 // ==========================================
@@ -376,7 +387,9 @@ Rules:
 - Do not invent facts.
 - Remove unnecessary repetition.
 - Make the result significantly shorter.
+- Use clear and natural language.
 - Return only the summary.
+- Do not explain the process.
 
 Text:
 ${text}
