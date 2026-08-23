@@ -9,6 +9,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Render uses a reverse proxy.
+app.set("trust proxy", 1);
 // Render runs behind a reverse proxy.
 // Trust the first proxy so express-rate-limit
 // can correctly identify visitors by IP.
