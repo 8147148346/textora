@@ -1,6 +1,7 @@
+```javascript
 // ==========================================
 // TEXTORA - TOOL.JS
-// Production Backend
+// Production Backend + Smart Loading
 // ==========================================
 
 const API_URL = "https://textora-backend-th7s.onrender.com";
@@ -60,10 +61,63 @@ async function callAPI(endpoint, body) {
 }
 
 // ==========================================
+// SMART LOADING SYSTEM
+// ==========================================
+
+function startSmartLoading() {
+
+  const messages = [
+    {
+      delay: 0,
+      text: "⚡ Connecting to TEXTORA..."
+    },
+    {
+      delay: 5000,
+      text: "🤖 TEXTORA is thinking..."
+    },
+    {
+      delay: 15000,
+      text: "✨ Almost ready..."
+    },
+    {
+      delay: 25000,
+      text: "🚀 Finishing your result..."
+    },
+    {
+      delay: 40000,
+      text: "⏳ TEXTORA is still working..."
+    }
+  ];
+
+  const timers = messages.map(message => {
+
+    return setTimeout(() => {
+
+      if (run && run.disabled && result) {
+        result.textContent = message.text;
+      }
+
+    }, message.delay);
+
+  });
+
+  return timers;
+}
+
+function stopSmartLoading(timers) {
+
+  timers.forEach(timer => {
+    clearTimeout(timer);
+  });
+
+}
+
+// ==========================================
 // MAIN TOOL BUTTON
 // ==========================================
 
 if (run) {
+
   run.addEventListener("click", async () => {
 
     const text = input ? input.value.trim() : "";
@@ -76,53 +130,85 @@ if (run) {
     if (toolType === "essay") {
 
       if (!topicText) {
-        result.textContent = "Please enter an essay topic.";
+
+        result.textContent =
+          "Please enter an essay topic.";
+
         return;
       }
 
     } else if (toolType === "email") {
 
       if (!topicText) {
+
         result.textContent =
           "Please enter what the email is about.";
+
         return;
       }
 
     } else {
 
       if (!text) {
+
         result.textContent =
           "Please enter some text first.";
+
         return;
       }
     }
 
-    const originalButtonText = run.textContent;
+    const originalButtonText =
+      run.textContent;
 
     run.disabled = true;
 
     // ========================================
-    // LOADING TEXT
+    // BUTTON LOADING TEXT
     // ========================================
 
     if (toolType === "humanizer") {
-      run.textContent = "Improving...";
+
+      run.textContent =
+        "Improving...";
+
     } else if (toolType === "grammar") {
-      run.textContent = "Checking...";
+
+      run.textContent =
+        "Checking...";
+
     } else if (toolType === "essay") {
-      run.textContent = "Creating...";
+
+      run.textContent =
+        "Creating...";
+
     } else if (toolType === "summarizer") {
-      run.textContent = "Summarizing...";
+
+      run.textContent =
+        "Summarizing...";
+
     } else if (toolType === "detector") {
-      run.textContent = "Analyzing...";
+
+      run.textContent =
+        "Analyzing...";
+
     } else if (toolType === "email") {
-      run.textContent = "Writing...";
+
+      run.textContent =
+        "Writing...";
+
     } else {
-      run.textContent = "Paraphrasing...";
+
+      run.textContent =
+        "Paraphrasing...";
     }
 
-    result.textContent =
-      "TEXTORA is processing your request...";
+    // ========================================
+    // START SMART LOADING
+    // ========================================
+
+    const loadingTimers =
+      startSmartLoading();
 
     try {
 
@@ -143,7 +229,8 @@ if (run) {
         );
 
         result.textContent =
-          data.result || "No result was returned.";
+          data.result ||
+          "No result was returned.";
 
         return;
       }
@@ -165,7 +252,8 @@ if (run) {
         );
 
         result.textContent =
-          data.result || "No result was returned.";
+          data.result ||
+          "No result was returned.";
 
         return;
       }
@@ -184,7 +272,8 @@ if (run) {
         );
 
         result.textContent =
-          data.result || "No result was returned.";
+          data.result ||
+          "No result was returned.";
 
         return;
       }
@@ -202,9 +291,10 @@ if (run) {
           }
         );
 
-        const signals = Array.isArray(data.signals)
-          ? data.signals
-          : [];
+        const signals =
+          Array.isArray(data.signals)
+            ? data.signals
+            : [];
 
         result.textContent =
           `Assessment: ${data.assessment || "Unknown"}\n\n` +
@@ -236,7 +326,8 @@ if (run) {
         );
 
         result.textContent =
-          data.result || "No summary was returned.";
+          data.result ||
+          "No summary was returned.";
 
         return;
       }
@@ -266,8 +357,10 @@ if (run) {
           "Medium";
 
         if (!emailTopic) {
+
           result.textContent =
             "Please enter what the email is about.";
+
           return;
         }
 
@@ -282,7 +375,8 @@ if (run) {
         );
 
         result.textContent =
-          data.result || "No email was returned.";
+          data.result ||
+          "No email was returned.";
 
         return;
       }
@@ -317,7 +411,8 @@ if (run) {
         );
 
         result.textContent =
-          data.result || "No essay was returned.";
+          data.result ||
+          "No essay was returned.";
 
         return;
       }
@@ -331,7 +426,10 @@ if (run) {
 
     } catch (error) {
 
-      console.error("TEXTORA error:", error);
+      console.error(
+        "TEXTORA error:",
+        error
+      );
 
       result.textContent =
         "TEXTORA could not process your request.\n\n" +
@@ -339,10 +437,20 @@ if (run) {
 
     } finally {
 
-      run.disabled = false;
-      run.textContent = originalButtonText;
+      // ========================================
+      // STOP SMART LOADING
+      // ========================================
 
+      stopSmartLoading(
+        loadingTimers
+      );
+
+      run.disabled = false;
+
+      run.textContent =
+        originalButtonText;
     }
+
   });
 }
 
@@ -352,28 +460,35 @@ if (run) {
 
 if (copy) {
 
-  copy.addEventListener("click", async () => {
+  copy.addEventListener(
+    "click",
+    async () => {
 
-    try {
+      try {
 
-      await navigator.clipboard.writeText(
-        result.innerText
-      );
+        await navigator.clipboard.writeText(
+          result.innerText
+        );
 
-      copy.textContent = "Copied!";
+        copy.textContent =
+          "Copied!";
 
-      setTimeout(() => {
-        copy.textContent = "Copy";
-      }, 1200);
+        setTimeout(() => {
 
-    } catch (error) {
+          copy.textContent =
+            "Copy";
 
-      alert(
-        "Copy is not available in this browser."
-      );
+        }, 1200);
+
+      } catch (error) {
+
+        alert(
+          "Copy is not available in this browser."
+        );
+      }
 
     }
-  });
+  );
 }
 
 // ==========================================
@@ -382,38 +497,56 @@ if (copy) {
 
 if (download) {
 
-  download.addEventListener("click", () => {
+  download.addEventListener(
+    "click",
+    () => {
 
-    const text =
-      result.innerText.trim();
+      const text =
+        result.innerText.trim();
 
-    if (!text) {
-      alert("There is no result to download.");
-      return;
-    }
+      if (!text) {
 
-    const blob = new Blob(
-      [text],
-      {
-        type: "text/plain;charset=utf-8"
+        alert(
+          "There is no result to download."
+        );
+
+        return;
       }
-    );
 
-    const url =
-      URL.createObjectURL(blob);
+      const blob =
+        new Blob(
+          [text],
+          {
+            type:
+              "text/plain;charset=utf-8"
+          }
+        );
 
-    const a =
-      document.createElement("a");
+      const url =
+        URL.createObjectURL(
+          blob
+        );
 
-    a.href = url;
-    a.download = "textora-result.txt";
+      const a =
+        document.createElement(
+          "a"
+        );
 
-    document.body.appendChild(a);
+      a.href = url;
 
-    a.click();
+      a.download =
+        "textora-result.txt";
 
-    a.remove();
+      document.body.appendChild(a);
 
-    URL.revokeObjectURL(url);
-  });
+      a.click();
+
+      a.remove();
+
+      URL.revokeObjectURL(
+        url
+      );
+    }
+  );
 }
+```
