@@ -1,4 +1,5 @@
-﻿// ==========================================
+```javascript
+// ==========================================
 // TEXTORA - TOOL.JS
 // Production Backend + Smart Loading
 // ==========================================
@@ -68,23 +69,23 @@ function startSmartLoading() {
   const messages = [
     {
       delay: 0,
-      text: "âš¡ Connecting to TEXTORA..."
+      text: "Connecting to TEXTORA..."
     },
     {
       delay: 5000,
-      text: "ðŸ¤– TEXTORA is thinking..."
+      text: "TEXTORA is thinking..."
     },
     {
       delay: 15000,
-      text: "âœ¨ Almost ready..."
+      text: "Almost ready..."
     },
     {
       delay: 25000,
-      text: "ðŸš€ Finishing your result..."
+      text: "Finishing your result..."
     },
     {
       delay: 40000,
-      text: "â³ TEXTORA is still working..."
+      text: "TEXTORA is still working..."
     }
   ];
 
@@ -548,3 +549,4 @@ if (download) {
     }
   );
 }
+```
