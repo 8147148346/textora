@@ -1,3 +1,10 @@
+// ==========================================
+// TEXTORA - TOOL.JS
+// Production Backend
+// ==========================================
+
+const API_URL = "https://textora-backend-th7s.onrender.com";
+
 const input = document.getElementById("input");
 const count = document.getElementById("count");
 const result = document.getElementById("result");
@@ -18,6 +25,38 @@ if (input && count) {
     count.textContent =
       `${input.value.length.toLocaleString()} characters`;
   });
+}
+
+// ==========================================
+// API HELPER
+// ==========================================
+
+async function callAPI(endpoint, body) {
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+
+  let data;
+
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error(
+      `Server returned an invalid response (${response.status}).`
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data.error || `Request failed (${response.status}).`
+    );
+  }
+
+  return data;
 }
 
 // ==========================================
@@ -56,7 +95,6 @@ if (run) {
           "Please enter some text first.";
         return;
       }
-
     }
 
     const originalButtonText = run.textContent;
@@ -64,7 +102,7 @@ if (run) {
     run.disabled = true;
 
     // ========================================
-    // BUTTON LOADING TEXT
+    // LOADING TEXT
     // ========================================
 
     if (toolType === "humanizer") {
@@ -94,27 +132,15 @@ if (run) {
 
       if (toolType === "paraphraser") {
 
-        const response = await fetch(
-          "http://localhost:3000/api/paraphrase",
+        const data = await callAPI(
+          "/api/paraphrase",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              text: text,
-              style: style ? style.value : "Standard"
-            })
+            text: text,
+            style: style
+              ? style.value
+              : "Standard"
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "Paraphraser request failed."
-          );
-        }
 
         result.textContent =
           data.result || "No result was returned.";
@@ -128,27 +154,15 @@ if (run) {
 
       if (toolType === "humanizer") {
 
-        const response = await fetch(
-          "http://localhost:3000/api/humanize",
+        const data = await callAPI(
+          "/api/humanize",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              text: text,
-              style: style ? style.value : "Natural"
-            })
+            text: text,
+            style: style
+              ? style.value
+              : "Natural"
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "Humanizer request failed."
-          );
-        }
 
         result.textContent =
           data.result || "No result was returned.";
@@ -162,26 +176,12 @@ if (run) {
 
       if (toolType === "grammar") {
 
-        const response = await fetch(
-          "http://localhost:3000/api/grammar",
+        const data = await callAPI(
+          "/api/grammar",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              text: text
-            })
+            text: text
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "Grammar request failed."
-          );
-        }
 
         result.textContent =
           data.result || "No result was returned.";
@@ -195,26 +195,12 @@ if (run) {
 
       if (toolType === "detector") {
 
-        const response = await fetch(
-          "http://localhost:3000/api/detect-ai",
+        const data = await callAPI(
+          "/api/detect-ai",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              text: text
-            })
+            text: text
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "AI detector request failed."
-          );
-        }
 
         const signals = Array.isArray(data.signals)
           ? data.signals
@@ -224,11 +210,14 @@ if (run) {
           `Assessment: ${data.assessment || "Unknown"}\n\n` +
           `Confidence: ${data.confidence || "Unknown"}\n\n` +
           `Signals:\n` +
-          `${signals.length
-            ? signals.map(signal => `- ${signal}`).join("\n")
-            : "- No signals returned."
-          }\n\n` +
-          `${data.note || ""}`;
+          (
+            signals.length
+              ? signals
+                  .map(signal => `- ${signal}`)
+                  .join("\n")
+              : "- No signals returned."
+          ) +
+          `\n\n${data.note || ""}`;
 
         return;
       }
@@ -239,26 +228,12 @@ if (run) {
 
       if (toolType === "summarizer") {
 
-        const response = await fetch(
-          "http://localhost:3000/api/summarize",
+        const data = await callAPI(
+          "/api/summarize",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              text: text
-            })
+            text: text
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "Summarizer request failed."
-          );
-        }
 
         result.textContent =
           data.result || "No summary was returned.";
@@ -273,14 +248,21 @@ if (run) {
       if (toolType === "email") {
 
         const emailTopic =
-          document.getElementById("topic")?.value.trim();
+          document
+            .getElementById("topic")
+            ?.value
+            .trim();
 
         const emailType =
-          document.getElementById("emailType")?.value ||
+          document
+            .getElementById("emailType")
+            ?.value ||
           "Professional";
 
         const emailLength =
-          document.getElementById("level")?.value ||
+          document
+            .getElementById("level")
+            ?.value ||
           "Medium";
 
         if (!emailTopic) {
@@ -289,29 +271,15 @@ if (run) {
           return;
         }
 
-        const response = await fetch(
-          "http://localhost:3000/api/email",
+        const data = await callAPI(
+          "/api/email",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              topic: emailTopic,
-              details: text,
-              emailType: emailType,
-              length: emailLength
-            })
+            topic: emailTopic,
+            details: text,
+            emailType: emailType,
+            length: emailLength
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "Email Writer request failed."
-          );
-        }
 
         result.textContent =
           data.result || "No email was returned.";
@@ -338,29 +306,15 @@ if (run) {
             ? selects[1].value
             : "School";
 
-        const response = await fetch(
-          "http://localhost:3000/api/essay",
+        const data = await callAPI(
+          "/api/essay",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              topic: topicText,
-              instructions: text,
-              essayType: essayType,
-              level: level
-            })
+            topic: topicText,
+            instructions: text,
+            essayType: essayType,
+            level: level
           }
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || "Essay request failed."
-          );
-        }
 
         result.textContent =
           data.result || "No essay was returned.";
@@ -380,8 +334,8 @@ if (run) {
       console.error("TEXTORA error:", error);
 
       result.textContent =
-        "TEXTORA could not process your request. " +
-        "Make sure the backend is running.";
+        "TEXTORA could not process your request.\n\n" +
+        error.message;
 
     } finally {
 
@@ -389,7 +343,6 @@ if (run) {
       run.textContent = originalButtonText;
 
     }
-
   });
 }
 
@@ -420,9 +373,7 @@ if (copy) {
       );
 
     }
-
   });
-
 }
 
 // ==========================================
@@ -433,23 +384,36 @@ if (download) {
 
   download.addEventListener("click", () => {
 
+    const text =
+      result.innerText.trim();
+
+    if (!text) {
+      alert("There is no result to download.");
+      return;
+    }
+
     const blob = new Blob(
-      [result.innerText],
+      [text],
       {
-        type: "text/plain"
+        type: "text/plain;charset=utf-8"
       }
     );
 
-    const a = document.createElement("a");
+    const url =
+      URL.createObjectURL(blob);
 
-    a.href = URL.createObjectURL(blob);
+    const a =
+      document.createElement("a");
 
+    a.href = url;
     a.download = "textora-result.txt";
+
+    document.body.appendChild(a);
 
     a.click();
 
-    URL.revokeObjectURL(a.href);
+    a.remove();
 
+    URL.revokeObjectURL(url);
   });
-
 }
