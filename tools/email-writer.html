@@ -1,83 +1,267 @@
 <!doctype html>
+
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>TEXTORA Email Writer</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Free AI Email Writer Online | TEXTORA</title>
+
+<meta
+name="description"
+content="Use TEXTORA's free AI email writer to create clear, professional and friendly emails for work, applications, follow-ups, requests and everyday communication."
+
+>
+
+<meta
+name="keywords"
+content="AI email writer, free AI email writer, email writer online, AI email generator, email generator, professional email writer"
+
+>
+
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="TEXTORA">
+  <meta name="theme-color" content="#2563EB">
+
+  <link
+    rel="canonical"
+    href="https://textora-app.pages.dev/tools/email-writer.html"
+  >
+
+  <!-- Open Graph -->
+
+  <meta property="og:type" content="website">
+
+<meta
+property="og:title"
+content="Free AI Email Writer Online | TEXTORA"
+
+>
+
+<meta
+property="og:description"
+content="Create clear and professional emails with TEXTORA's free AI email writer."
+
+>
+
+  <meta property="og:site_name" content="TEXTORA">
+
+<meta
+property="og:url"
+content="https://textora-app.pages.dev/tools/email-writer.html"
+
+>
+
+  <!-- Twitter -->
+
+  <meta name="twitter:card" content="summary">
+
+<meta
+name="twitter:title"
+content="Free AI Email Writer Online | TEXTORA"
+
+>
+
+<meta
+name="twitter:description"
+content="Create professional emails quickly with TEXTORA's AI email writer."
+
+>
+
+  <!-- Favicon -->
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/textora-logo.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="../assets/images/textora-logo.png"
+  >
+
+  <!-- Styles -->
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css"
+  >
 </head>
 
 <body data-tool="email">
 
-<header class="site-header">
-<a class="brand" href="../index.html" aria-label="TEXTORA Home">TEXTORA</a>
-<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button>
-<nav class="nav" aria-label="Main navigation">
-<a href="../index.html">Home</a>
-<a href="../index.html#tools">AI Tools</a>
-<a href="../pricing.html">Pricing</a>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a class="btn btn-small" href="../index.html#tools">Start Writing Free</a>
+  <!-- HEADER -->
+
+  <header class="site-header">
+
+```
+<a
+  class="brand"
+  href="../index.html"
+  aria-label="TEXTORA Home"
+>
+  TEXTORA
+</a>
+
+<button
+  class="menu-toggle"
+  type="button"
+  aria-label="Open navigation menu"
+  aria-expanded="false"
+>
+  ☰
+</button>
+
+<nav
+  class="nav"
+  aria-label="Main navigation"
+>
+  <a href="../index.html">Home</a>
+  <a href="../index.html#tools">AI Tools</a>
+  <a href="../pricing.html">Pricing</a>
+  <a href="../about.html">About</a>
+  <a href="../contact.html">Contact</a>
+
+  <a
+    class="btn btn-small"
+    href="../index.html#tools"
+  >
+    Start Writing Free
+  </a>
 </nav>
-</header>
+```
 
-<main class="tool-page">
+  </header>
 
-  <span class="eyebrow">WRITING ASSISTANT</span>
+  <!-- MAIN TOOL -->
 
-  <h1>AI Email Writer</h1>
+  <main class="tool-page">
 
-  <p>Create clear and professional emails with TEXTORA.</p>
+```
+<span class="eyebrow">
+  AI WRITING TOOL
+</span>
 
-  <div class="tool-shell single">
+<h1>
+  Free AI Email Writer
+</h1>
 
-    <input
-      id="topic"
-      placeholder="What is the email about? e.g. Request for leave"
+<p>
+  Create clear, professional and well-structured emails
+  with TEXTORA's AI email writer.
+</p>
+
+<div class="tool-shell single">
+
+  <label for="topic">
+    What is the email about?
+  </label>
+
+  <input
+    id="topic"
+    type="text"
+    placeholder="e.g. Request for leave"
+    aria-label="Email topic"
+  >
+
+  <div class="form-row">
+
+    <select
+      id="emailType"
+      aria-label="Email type"
     >
+      <option>Professional</option>
+      <option>Formal</option>
+      <option>Friendly</option>
+      <option>Job Application</option>
+      <option>Follow-up</option>
+      <option>Apology</option>
+      <option>Request</option>
+    </select>
 
-    <div class="form-row">
-      <select id="emailType">
-        <option>Professional</option>
-        <option>Formal</option>
-        <option>Friendly</option>
-        <option>Job Application</option>
-        <option>Follow-up</option>
-        <option>Apology</option>
-        <option>Request</option>
-      </select>
+    <select
+      id="level"
+      aria-label="Email length"
+    >
+      <option>Short</option>
+      <option>Medium</option>
+      <option>Detailed</option>
+    </select>
 
-      <select id="level">
-        <option>Short</option>
-        <option>Medium</option>
-        <option>Detailed</option>
-      </select>
-    </div>
+  </div>
 
-    <textarea
-      id="input"
-      placeholder="Add any important details..."
-    ></textarea>
+  <label for="input">
+    Additional details
+  </label>
 
-    <button class="btn" id="run">
-      Write Email
+  <textarea
+    id="input"
+    placeholder="Add any important details..."
+    aria-label="Additional email details"
+  ></textarea>
+
+  <button
+    type="button"
+    class="btn"
+    id="run"
+  >
+    Write Email
+  </button>
+
+  <div
+    class="result"
+    id="result"
+    aria-live="polite"
+  >
+    Your email will appear here.
+  </div>
+
+  <div class="result-actions">
+
+    <button
+      type="button"
+      class="btn btn-small"
+      id="copy"
+    >
+      Copy
     </button>
 
-    <div class="result" id="result">
-      Your email will appear here.
-    </div>
+    <button
+      type="button"
+      class="btn btn-small btn-ghost"
+      id="download"
+    >
+      Download
+    </button>
 
   </div>
 
-  <div class="notice">
-    Review the generated email and personalize names, dates, and other details before sending.
-  </div>
+</div>
 
-</main>
+<div class="notice">
 
-<script src="../assets/js/main.js"></script>
-<script src="../assets/js/tool.js"></script>
+  <strong>TEXTORA AI Email Writer</strong>
+
+  <br>
+
+  Create professional emails for work, applications,
+  follow-ups, requests and everyday communication.
+  Review the generated email and personalize names,
+  dates and other important details before sending.
+
+</div>
+```
+
+  </main>
+
+  <!-- JAVASCRIPT -->
+
+  <script src="../assets/js/main.js"></script>
+
+  <script src="../assets/js/tool.js"></script>
 
 </body>
+
 </html>
