@@ -1,79 +1,201 @@
 <!doctype html>
-
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>TEXTORA Grammar Checker</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO -->
+  <title>Free AI Grammar Checker – Check Grammar Online | TEXTORA</title>
+
+  <meta
+    name="description"
+    content="Use TEXTORA's free AI grammar checker to check grammar, spelling, punctuation, clarity and sentence structure online."
+  >
+
+  <meta
+    name="keywords"
+    content="AI grammar checker, free grammar checker, grammar checker online, spelling checker, punctuation checker"
+  >
+
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="TEXTORA">
+  <meta name="theme-color" content="#2563EB">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta
+    property="og:title"
+    content="Free AI Grammar Checker – Check Grammar Online | TEXTORA"
+  >
+  <meta
+    property="og:description"
+    content="Check grammar, spelling, punctuation and clarity with TEXTORA's free AI grammar checker."
+  >
+  <meta property="og:site_name" content="TEXTORA">
+
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/textora-logo.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="../assets/images/textora-logo.png"
+  >
+
+  <!-- Styles -->
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css"
+  >
 </head>
 
 <body data-tool="grammar">
 
+  <!-- HEADER -->
+
   <header class="site-header">
-<a class="brand" href="../index.html" aria-label="TEXTORA Home">TEXTORA</a>
-<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button>
-<nav class="nav" aria-label="Main navigation">
-<a href="../index.html">Home</a>
-<a href="../index.html#tools">AI Tools</a>
-<a href="../pricing.html">Pricing</a>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a class="btn btn-small" href="../index.html#tools">Start Writing Free</a>
-</nav>
-</header>
+
+    <a
+      class="brand"
+      href="../index.html"
+      aria-label="TEXTORA Home"
+    >
+      TEXTORA
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav
+      class="nav"
+      aria-label="Main navigation"
+    >
+      <a href="../index.html">Home</a>
+      <a href="../index.html#tools">AI Tools</a>
+      <a href="../pricing.html">Pricing</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+
+      <a
+        class="btn btn-small"
+        href="../index.html#tools"
+      >
+        Start Writing Free
+      </a>
+    </nav>
+
+  </header>
+
+
+  <!-- MAIN TOOL -->
 
   <main class="tool-page">
 
-<span class="eyebrow">TEXT TOOL</span>
+    <span class="eyebrow">
+      AI WRITING TOOL
+    </span>
 
-<h1>Grammar Checker</h1>
+    <h1>
+      Free AI Grammar Checker
+    </h1>
 
-<p>
-  Review grammar, spelling, punctuation and clarity.
-</p>
+    <p>
+      Check grammar, spelling, punctuation, clarity and sentence
+      structure with TEXTORA's AI-powered grammar checker.
+    </p>
 
-<div class="tool-shell single">
 
-  <label for="input">Your text</label>
+    <div class="tool-shell single">
 
-  <textarea
-    id="input"
-    placeholder="Paste your writing here..."
-  ></textarea>
+      <label for="input">
+        Your text
+      </label>
 
-  <div class="counter">
-    <span id="count">0 characters</span>
-  </div>
+      <textarea
+        id="input"
+        placeholder="Paste your writing here..."
+        aria-label="Text to check for grammar"
+      ></textarea>
 
-  <button class="btn" id="run">
-    Check Grammar
-  </button>
 
-  <div class="result" id="result">
-    Suggestions will appear here.
-  </div>
+      <div class="counter">
+        <span id="count">
+          0 characters
+        </span>
+      </div>
 
-  <div class="result-actions">
-    <button class="btn btn-small" id="copy">
-      Copy
-    </button>
 
-    <button class="btn btn-small" id="download">
-      Download
-    </button>
-  </div>
+      <button
+        type="button"
+        class="btn"
+        id="run"
+      >
+        Check Grammar
+      </button>
 
-</div>
 
-<div class="notice">
-  TEXTORA processes your text through the secure backend.
-</div>
+      <div
+        class="result"
+        id="result"
+        aria-live="polite"
+      >
+        Grammar suggestions will appear here.
+      </div>
+
+
+      <div class="result-actions">
+
+        <button
+          type="button"
+          class="btn btn-small"
+          id="copy"
+        >
+          Copy
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-small"
+          id="download"
+        >
+          Download
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="notice">
+
+      <strong>TEXTORA AI Grammar Checker</strong>
+
+      <br>
+
+      Review grammar, spelling, punctuation, clarity and
+      sentence structure with AI. Your text is processed
+      through the secure TEXTORA backend.
+
+    </div>
 
   </main>
 
+
+  <!-- JAVASCRIPT -->
+
   <script src="../assets/js/main.js"></script>
-<script src="../assets/js/tool.js"></script>
+  <script src="../assets/js/tool.js"></script>
 
 </body>
+
 </html>
