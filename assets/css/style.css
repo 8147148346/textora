@@ -1850,6 +1850,19 @@ a {
   .price-card:hover {
     box-shadow: 0 15px 35px rgba(37, 99, 235, 0.10);
   }
+
+  /* Tap feedback for touch devices (no hover state exists on mobile) */
+  .price-card:active {
+    transform: scale(0.97) !important;
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.12);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  .price-card.featured:active {
+    border-color: #6366f1;
+    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.18);
+  }
 }
 
 
@@ -1991,87 +2004,4 @@ a {
     margin-top: 8px;
     justify-content: center;
   }
-}
-
-/* =========================================================
-   TEXTORA — SAFE MOBILE ANIMATION PATCH
-   ========================================================= */
-
-@media (max-width: 650px) {
-
-  /* Mobile product preview */
-  .product-preview {
-    animation: textora-mobile-float 5s ease-in-out infinite;
-    will-change: transform;
-  }
-
-  @keyframes textora-mobile-float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-5px);
-    }
-  }
-
-  /* Pricing cards enter smoothly on mobile */
-  .price-card {
-    animation: textora-price-in 0.6s ease both;
-  }
-
-  .price-card:nth-child(2) {
-    animation-delay: 0.1s;
-  }
-
-  .price-card:nth-child(3) {
-    animation-delay: 0.2s;
-  }
-
-  @keyframes textora-price-in {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Mobile loading indicator */
-  .result.loading {
-    position: relative;
-  }
-
-  .result.loading::before {
-    content: "TEXTORA is working...";
-    display: block;
-    color: #64748b;
-    font-size: 0.9rem;
-    font-weight: 700;
-    animation: textora-loading-pulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes textora-loading-pulse {
-    0%, 100% {
-      opacity: 0.55;
-    }
-
-    50% {
-      opacity: 1;
-    }
-  }
-}
-
-/* Respect reduced-motion accessibility */
-@media (prefers-reduced-motion: reduce) {
-
-  .product-preview,
-  .price-card,
-  .result.loading {
-    animation: none !important;
-  }
-
 }
