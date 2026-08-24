@@ -1,7 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://YOUR-TEXTORA-DOMAIN/</loc></url>
-  <url><loc>https://YOUR-TEXTORA-DOMAIN/pricing.html</loc></url>
-  <url><loc>https://YOUR-TEXTORA-DOMAIN/about.html</loc></url>
-  <url><loc>https://YOUR-TEXTORA-DOMAIN/contact.html</loc></url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/pricing.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/about.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/contact.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/privacy-policy.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/terms.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/disclaimer.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/paraphraser.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/grammar-checker.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/ai-humanizer.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/ai-content-detector.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/essay-writer.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/text-summarizer.html</loc>
+  </url>
+
+  <url>
+    <loc>https://textora-app.pages.dev/tools/email-writer.html</loc>
+  </url>
+
 </urlset>
