@@ -2005,3 +2005,39 @@ a {
     justify-content: center;
   }
 }
+
+/* =========================================================
+   TEXTORA — MOBILE PRICING ANIMATION
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .price-card {
+    animation: textora-price-mobile 0.65s ease both;
+  }
+
+  .price-card:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .price-card:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .price-card:nth-child(3) {
+    animation-delay: 0.25s;
+  }
+
+  @keyframes textora-price-mobile {
+    from {
+      opacity: 0;
+      transform: translateY(25px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+}
