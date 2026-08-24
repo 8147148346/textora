@@ -1,41 +1,76 @@
-```html
 <!doctype html>
+
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- SEO -->
-  <title>AI Humanizer – Improve Writing Naturally | TEXTORA</title>
+  <title>Free AI Humanizer Online | TEXTORA</title>
 
-  <meta
-    name="description"
-    content="Use TEXTORA's AI Humanizer to improve natural expression, readability and sentence flow while keeping your original meaning."
-  >
+<meta
+name="description"
+content="Use TEXTORA's free AI humanizer to improve natural expression, readability and sentence flow while keeping your original meaning."
 
-  <meta
-    name="keywords"
-    content="AI humanizer, AI text humanizer, humanize AI text, AI writing humanizer, natural writing tool"
-  >
+>
+
+<meta
+name="keywords"
+content="AI humanizer, free AI humanizer, AI text humanizer, humanize AI text, AI writing humanizer, natural writing tool"
+
+>
 
   <meta name="robots" content="index, follow">
   <meta name="author" content="TEXTORA">
   <meta name="theme-color" content="#2563EB">
 
+  <link
+    rel="canonical"
+    href="https://textora-app.pages.dev/tools/ai-humanizer.html"
+  >
+
   <!-- Open Graph -->
+
   <meta property="og:type" content="website">
-  <meta
-    property="og:title"
-    content="AI Humanizer – Improve Writing Naturally | TEXTORA"
-  >
-  <meta
-    property="og:description"
-    content="Improve natural expression, readability and sentence flow with TEXTORA's AI Humanizer."
-  >
+
+<meta
+property="og:title"
+content="Free AI Humanizer Online | TEXTORA"
+
+>
+
+<meta
+property="og:description"
+content="Improve natural expression, readability and sentence flow with TEXTORA's free AI humanizer."
+
+>
+
   <meta property="og:site_name" content="TEXTORA">
 
+<meta
+property="og:url"
+content="https://textora-app.pages.dev/tools/ai-humanizer.html"
+
+>
+
+  <!-- Twitter -->
+
+  <meta name="twitter:card" content="summary">
+
+<meta
+name="twitter:title"
+content="Free AI Humanizer Online | TEXTORA"
+
+>
+
+<meta
+name="twitter:description"
+content="Improve AI-assisted writing with TEXTORA's free AI humanizer."
+
+>
+
   <!-- Favicon -->
+
   <link
     rel="icon"
     type="image/png"
@@ -48,6 +83,7 @@
   >
 
   <!-- Styles -->
+
   <link
     rel="stylesheet"
     href="../assets/css/style.css"
@@ -60,137 +96,154 @@
 
   <header class="site-header">
 
-    <a
-      class="brand"
-      href="../index.html"
-      aria-label="TEXTORA Home"
-    >
-      TEXTORA
-    </a>
+```
+<a
+  class="brand"
+  href="../index.html"
+  aria-label="TEXTORA Home"
+>
+  TEXTORA
+</a>
 
-    <button
-      class="menu-toggle"
-      type="button"
-      aria-label="Open navigation menu"
-      aria-expanded="false"
-    >
-      ☰
-    </button>
+<button
+  class="menu-toggle"
+  type="button"
+  aria-label="Open navigation menu"
+  aria-expanded="false"
+>
+  ☰
+</button>
 
-    <nav
-      class="nav"
-      aria-label="Main navigation"
-    >
-      <a href="../index.html">Home</a>
-      <a href="../index.html#tools">AI Tools</a>
-      <a href="../pricing.html">Pricing</a>
-      <a href="../about.html">About</a>
-      <a href="../contact.html">Contact</a>
+<nav
+  class="nav"
+  aria-label="Main navigation"
+>
+  <a href="../index.html">Home</a>
+  <a href="../index.html#tools">AI Tools</a>
+  <a href="../pricing.html">Pricing</a>
+  <a href="../about.html">About</a>
+  <a href="../contact.html">Contact</a>
 
-      <a
-        class="btn btn-small"
-        href="../index.html#tools"
-      >
-        Start Writing Free
-      </a>
-    </nav>
+  <a
+    class="btn btn-small"
+    href="../index.html#tools"
+  >
+    Start Writing Free
+  </a>
+</nav>
+```
 
   </header>
-
 
   <!-- MAIN TOOL -->
 
   <main class="tool-page">
 
-    <span class="eyebrow">
-      AI WRITING TOOL
+```
+<span class="eyebrow">
+  AI WRITING TOOL
+</span>
+
+<h1>
+  Free AI Humanizer
+</h1>
+
+<p>
+  Improve natural expression, readability and sentence flow
+  while keeping your original meaning.
+</p>
+
+<div class="tool-shell single">
+
+  <label for="input">
+    Your text
+  </label>
+
+  <textarea
+    id="input"
+    placeholder="Paste your text here..."
+    aria-label="Text to improve"
+  ></textarea>
+
+  <div class="counter">
+
+    <span id="count">
+      0 characters
     </span>
 
-    <h1>
-      AI Humanizer
-    </h1>
+    <select
+      id="style"
+      aria-label="Choose writing style"
+    >
+      <option value="Natural">Natural</option>
+      <option value="Professional">Professional</option>
+      <option value="Academic">Academic</option>
+      <option value="Friendly">Friendly</option>
+      <option value="Simple">Simple</option>
+    </select>
 
-    <p>
-      Improve natural expression, readability and sentence flow
-      while keeping your original meaning.
-    </p>
+  </div>
 
+  <button
+    type="button"
+    class="btn"
+    id="run"
+  >
+    Improve Writing
+  </button>
 
-    <div class="tool-shell single">
+  <div
+    class="result"
+    id="result"
+    aria-live="polite"
+  >
+    Your improved writing will appear here.
+  </div>
 
-      <label for="input">
-        Your text
-      </label>
+  <div class="result-actions">
 
-      <textarea
-        id="input"
-        placeholder="Paste your text here..."
-        aria-label="Text to improve"
-      ></textarea>
+    <button
+      type="button"
+      class="btn btn-small"
+      id="copy"
+    >
+      Copy
+    </button>
 
+    <button
+      type="button"
+      class="btn btn-small btn-ghost"
+      id="download"
+    >
+      Download
+    </button>
 
-      <div class="counter">
+  </div>
 
-        <span id="count">
-          0 characters
-        </span>
+</div>
 
-        <select
-          id="style"
-          aria-label="Choose writing style"
-        >
-          <option>Natural</option>
-          <option>Professional</option>
-          <option>Academic</option>
-          <option>Friendly</option>
-          <option>Simple</option>
-        </select>
+<div class="notice">
 
-      </div>
+  <strong>TEXTORA AI Humanizer</strong>
 
+  <br>
 
-      <button
-        type="button"
-        class="btn"
-        id="run"
-      >
-        Improve Writing
-      </button>
+  Improve natural expression, readability and sentence
+  flow with AI. Results can vary depending on the original
+  text and writing style. No AI writing tool can guarantee
+  a particular AI-detector result.
 
-
-      <div
-        class="result"
-        id="result"
-        aria-live="polite"
-      >
-        Your improved writing will appear here.
-      </div>
-
-    </div>
-
-
-    <div class="notice">
-
-      <strong>TEXTORA AI Humanizer</strong>
-
-      <br>
-
-      Improve natural expression, readability and sentence
-      flow with AI. Results can vary depending on the original
-      text and writing style. No AI writing tool can guarantee
-      a particular AI-detector result.
-
-    </div>
+</div>
+```
 
   </main>
-
 
   <!-- JAVASCRIPT -->
 
   <script src="../assets/js/main.js"></script>
+
   <script src="../assets/js/tool.js"></script>
 
 </body>
 
 </html>
-```
