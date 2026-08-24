@@ -5,6 +5,11 @@
 
 const API_URL = "https://textora-backend-th7s.onrender.com";
 
+// Wake up the backend as soon as the page loads (Render free tier sleeps
+// after inactivity). This runs in the background so by the time the user
+// clicks Run, the server has a head start on waking up.
+fetch(API_URL, { method: "GET" }).catch(function () {});
+
 const input = document.getElementById("input");
 const count = document.getElementById("count");
 const result = document.getElementById("result");
@@ -166,6 +171,10 @@ if (run) {
       run.textContent;
 
     run.disabled = true;
+
+    if (result) {
+      result.classList.add("loading");
+    }
 
     // ========================================
     // BUTTON LOADING TEXT
@@ -467,6 +476,10 @@ if (run) {
       stopSmartLoading(
         loadingTimers
       );
+
+      if (result) {
+        result.classList.remove("loading");
+      }
 
       run.disabled = false;
 
