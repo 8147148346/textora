@@ -5,13 +5,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- SEO -->
+  <title>AI Paraphraser – Rewrite Text Clearly | TEXTORA</title>
+
   <meta
     name="description"
-    content="TEXTORA AI Paraphraser — Rewrite text clearly while preserving its original meaning."
+    content="Use TEXTORA's free AI paraphraser to rewrite text clearly while preserving meaning, improving grammar, readability, and sentence flow."
   >
 
-  <title>TEXTORA — AI Paraphraser</title>
+  <meta
+    name="keywords"
+    content="AI paraphraser, free AI paraphraser, paraphrase text, text rewriter, AI text rewriter"
+  >
 
+  <meta name="robots" content="index, follow">
+
+  <meta name="author" content="TEXTORA">
+
+  <meta name="theme-color" content="#2563EB">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI Paraphraser – Rewrite Text Clearly | TEXTORA">
+  <meta
+    property="og:description"
+    content="Rewrite text with TEXTORA's AI paraphraser while preserving meaning and improving clarity and readability."
+  >
+  <meta property="og:site_name" content="TEXTORA">
+
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/textora-logo.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="../assets/images/textora-logo.png"
+  >
+
+  <!-- Styles -->
   <link
     rel="stylesheet"
     href="../assets/css/style.css"
@@ -20,27 +54,49 @@
 
 <body data-tool="paraphraser">
 
-  <!-- ==============================
-       HEADER
-  =============================== -->
+  <!-- HEADER -->
 
   <header class="site-header">
-<a class="brand" href="../index.html" aria-label="TEXTORA Home">TEXTORA</a>
-<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button>
-<nav class="nav" aria-label="Main navigation">
-<a href="../index.html">Home</a>
-<a href="../index.html#tools">AI Tools</a>
-<a href="../pricing.html">Pricing</a>
-<a href="../about.html">About</a>
-<a href="../contact.html">Contact</a>
-<a class="btn btn-small" href="../index.html#tools">Start Writing Free</a>
-</nav>
-</header>
+
+    <a
+      class="brand"
+      href="../index.html"
+      aria-label="TEXTORA Home"
+    >
+      TEXTORA
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav
+      class="nav"
+      aria-label="Main navigation"
+    >
+      <a href="../index.html">Home</a>
+      <a href="../index.html#tools">AI Tools</a>
+      <a href="../pricing.html">Pricing</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+
+      <a
+        class="btn btn-small"
+        href="../index.html#tools"
+      >
+        Start Writing Free
+      </a>
+    </nav>
+
+  </header>
 
 
-  <!-- ==============================
-       MAIN TOOL
-  =============================== -->
+  <!-- MAIN TOOL -->
 
   <main class="tool-page">
 
@@ -54,15 +110,13 @@
 
     <p>
       Rewrite your text while preserving its original meaning,
-      improving clarity, grammar, and readability.
+      improving clarity, grammar, readability, and sentence flow.
     </p>
 
 
     <div class="tool-shell">
 
-      <!-- ==========================
-           INPUT
-      =========================== -->
+      <!-- INPUT -->
 
       <div>
 
@@ -74,6 +128,7 @@
           id="input"
           placeholder="Paste your text here..."
           rows="12"
+          aria-label="Text to paraphrase"
         ></textarea>
 
 
@@ -83,7 +138,10 @@
             0 characters
           </span>
 
-          <select id="style" aria-label="Writing style">
+          <select
+            id="style"
+            aria-label="Choose paraphrasing style"
+          >
 
             <option value="Standard">
               Standard
@@ -125,14 +183,12 @@
       </div>
 
 
-      <!-- ==========================
-           RESULT
-      =========================== -->
+      <!-- RESULT -->
 
       <div>
 
         <label for="result">
-          Result
+          Paraphrased result
         </label>
 
         <div
@@ -140,7 +196,7 @@
           id="result"
           aria-live="polite"
         >
-          Your result will appear here.
+          Your paraphrased result will appear here.
         </div>
 
 
@@ -169,9 +225,7 @@
     </div>
 
 
-    <!-- ==============================
-         INFO
-    =============================== -->
+    <!-- INFO -->
 
     <div class="notice">
 
@@ -179,21 +233,20 @@
 
       <br>
 
-      Your text is processed through the secure TEXTORA
-      backend. Your Gemini API key remains on the server
-      and is never exposed in the browser.
+      Rewrite and improve your content with AI while
+      keeping the original meaning. Your Gemini API key
+      remains securely on the server and is never exposed
+      in the browser.
 
     </div>
 
   </main>
 
 
-  <!-- ==============================
-       JAVASCRIPT
-  =============================== -->
+  <!-- JAVASCRIPT -->
 
   <script src="../assets/js/main.js"></script>
-<script src="../assets/js/tool.js"></script>
+  <script src="../assets/js/tool.js"></script>
 
 </body>
 
